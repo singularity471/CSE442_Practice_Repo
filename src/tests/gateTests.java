@@ -7,6 +7,9 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 public class gateTests {
+	
+	
+	//Test message
 
 	
 	// Tests for AND Gate
