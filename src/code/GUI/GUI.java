@@ -28,7 +28,9 @@ public class GUI {
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		frame.setSize(1366, 768);
+		Dimension d = new Dimension(1366,768);
+		
+		frame.setPreferredSize(d);
 		
 		frame.getContentPane().add(gridSpaceLabel, BorderLayout.CENTER);
 		
