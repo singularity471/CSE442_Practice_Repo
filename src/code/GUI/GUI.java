@@ -28,6 +28,8 @@ public class GUI {
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
+		frame.setSize(1366, 768);
+		
 		frame.getContentPane().add(gridSpaceLabel, BorderLayout.CENTER);
 		
 		frame.getContentPane().setBackground(Color.BLUE);  //Clayton Test
