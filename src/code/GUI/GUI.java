@@ -30,6 +30,7 @@ public class GUI {
 		
 		frame.getContentPane().add(gridSpaceLabel, BorderLayout.CENTER);
 		
+		frame.getContentPane().setBackground(Color.BLUE);  //Clayton Test
 		
 		//Variables used for Menus
 		JMenuBar menuBar;
