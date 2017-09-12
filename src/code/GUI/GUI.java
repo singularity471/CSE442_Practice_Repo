@@ -30,6 +30,7 @@ public class GUI {
 		
 		frame.getContentPane().add(gridSpaceLabel, BorderLayout.CENTER);
 		
+		
 		//Variables used for Menus
 		JMenuBar menuBar;
 		JMenu menu;
