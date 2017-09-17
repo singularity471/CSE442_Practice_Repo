@@ -106,8 +106,12 @@ public class GUI {
 		}
 		gates_and_io.add(button);
 		
+		gates_and_io.addSeparator();
+		
 		button = new JButton("INPUT");
 		gates_and_io.add(button);
+		
+		gates_and_io.addSeparator();
 	
 		button = new JButton("OUTPUT");
 		gates_and_io.add(button);
@@ -124,6 +128,15 @@ public class GUI {
 		
 		
 		// End add side-bar
+		
+		
+		// Add example circuit button to Toolbar
+		
+		button = new JButton("DISPLAY EXAMPLE CIRCUIT");
+		gates_and_io.addSeparator();
+		gates_and_io.add(button);
+		
+		// End example circuit button
 		
 		frame.getContentPane().add(gridSpaceLabel, BorderLayout.CENTER);
 		
