@@ -29,7 +29,7 @@ public class GUI {
 		
 		//Create JFrame
 		JFrame frame = new JFrame("LogiCAD");
-		JLabel gridSpaceLabel = new JLabel("Grid Workspace");
+		JLabel gridSpaceLabel = new JLabel();
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
@@ -115,6 +115,15 @@ public class GUI {
 		frame.getContentPane().add(gates_and_io, BorderLayout.NORTH);
 		
 		// End of JToolbar code
+		
+		// Add side-bar
+		JPanel sideBar = new JPanel();
+		sideBar.setPreferredSize(new Dimension(200, 768));
+		
+		frame.getContentPane().add(sideBar, BorderLayout.WEST);
+		
+		
+		// End add side-bar
 		
 		frame.getContentPane().add(gridSpaceLabel, BorderLayout.CENTER);
 		
