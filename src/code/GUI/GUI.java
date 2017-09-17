@@ -8,8 +8,12 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -17,6 +21,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JToolBar;
 
 public class GUI {
 	
@@ -32,9 +37,88 @@ public class GUI {
 		
 		frame.setPreferredSize(d);
 		
+		
+		// Adds JToolbar and buttons to JFrame
+		
+		JToolBar gates_and_io = new JToolBar("Gates & I/O");
+		gates_and_io.setRollover(true);
+		
+		JButton button = new JButton();
+		try {
+			Image img = ImageIO.read(this.getClass().getResource("/and_with_text.png"));
+			button.setIcon(new ImageIcon(img));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		gates_and_io.add(button);
+		
+		button = new JButton();
+		try {
+			Image img = ImageIO.read(this.getClass().getResource("/or_with_text.png"));
+			button.setIcon(new ImageIcon(img));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		gates_and_io.add(button);
+		
+		button = new JButton();
+		try {
+			Image img = ImageIO.read(this.getClass().getResource("/not_with_text.png"));
+			button.setIcon(new ImageIcon(img));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		gates_and_io.add(button);
+		
+		button = new JButton();
+		try {
+			Image img = ImageIO.read(this.getClass().getResource("/xor_with_text.png"));
+			button.setIcon(new ImageIcon(img));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		gates_and_io.add(button);
+		
+		button = new JButton();
+		try {
+			Image img = ImageIO.read(this.getClass().getResource("/nand_with_text.png"));
+			button.setIcon(new ImageIcon(img));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		gates_and_io.add(button);
+		
+		button = new JButton();
+		try {
+			Image img = ImageIO.read(this.getClass().getResource("/nor_with_text.png"));
+			button.setIcon(new ImageIcon(img));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		gates_and_io.add(button);
+		
+		button = new JButton();
+		try {
+			Image img = ImageIO.read(this.getClass().getResource("/xnor_with_text.png"));
+			button.setIcon(new ImageIcon(img));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		gates_and_io.add(button);
+		
+		button = new JButton("INPUT");
+		gates_and_io.add(button);
+	
+		button = new JButton("OUTPUT");
+		gates_and_io.add(button);
+	
+		frame.getContentPane().add(gates_and_io, BorderLayout.NORTH);
+		
+		// End of JToolbar code
+		
 		frame.getContentPane().add(gridSpaceLabel, BorderLayout.CENTER);
 		
-		frame.getContentPane().setBackground(Color.BLUE);  //Clayton Test
+		frame.getContentPane().setBackground(Color.GRAY);  //Clayton Test
 		
 		//Variables used for Menus
 		JMenuBar menuBar;
@@ -93,6 +177,8 @@ public class GUI {
 			
 		//Set Main Menu as JMenuBar
 		frame.setJMenuBar(menuBar);
+		
+		
 		
 		//Pack contents of JFrame nicely
 		frame.pack();
