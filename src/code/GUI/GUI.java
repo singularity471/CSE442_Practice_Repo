@@ -8,6 +8,8 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,16 +17,24 @@ import java.util.Collections;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
 import javax.swing.JToolBar;
+import javax.swing.JTree;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreePath;
+
+import com.sun.glass.events.MouseEvent;
 
 public class GUI {
-	
+	private JTree dirStructure;
 	public void run() {
 		
 		//Create JFrame
@@ -124,9 +134,19 @@ public class GUI {
 		JPanel sideBar = new JPanel();
 		sideBar.setPreferredSize(new Dimension(200, 768));
 		
-		frame.getContentPane().add(sideBar, BorderLayout.WEST);
+		// Expandable List
+		         
+		DefaultMutableTreeNode top = new DefaultMutableTreeNode("Example Project Directory");
+		DefaultMutableTreeNode child = new DefaultMutableTreeNode("Example Child");
+		top.add(child);
+		dirStructure = new JTree(top);
+		JScrollPane treeView = new JScrollPane(dirStructure);
 		
+		treeView.setPreferredSize(new Dimension(200,768));
+		         
 		
+		frame.getContentPane().add(treeView, BorderLayout.WEST);
+		//frame.getContentPane().add(sideBar, BorderLayout.WEST);
 		// End add side-bar
 		
 		
