@@ -134,8 +134,7 @@ public class GUI {
 		JPanel sideBar = new JPanel();
 		sideBar.setPreferredSize(new Dimension(200, 768));
 		
-		// Expandable List
-		         
+		// Expandable List     
 		DefaultMutableTreeNode top = new DefaultMutableTreeNode("Example Project Directory");
 		DefaultMutableTreeNode child = new DefaultMutableTreeNode("Example Child");
 		top.add(child);
