@@ -27,7 +27,9 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JToolBar;
+import javax.swing.SwingConstants;
 
 public class GUI {
 	
@@ -177,76 +179,88 @@ public class GUI {
 		menuItem = new JMenuItem("About");
 		menuItem.setMnemonic(KeyEvent.VK_A);
 		
+		//String text = "<html> <h3> Hello, World! </h3> <br> Import Module: User is able to save circuit designs as modules that can be loaded and used in future projects. <br> NAND Gate Button: A NAND gate will appear on the grid workspace for a user to be able to work with. This logic gate must be given two inputs and will provide an output." + " + </html>";
 		
 		//Create an action listener for the about menu
 		menuItem.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
-				JOptionPane.showMessageDialog(null, "Welcome to LogiCAD!\r\n" + 
+				JLabel abouttext = new JLabel();
+				abouttext.setHorizontalTextPosition(SwingConstants.CENTER);
+				abouttext.setVerticalTextPosition(SwingConstants.NORTH);
+				abouttext.setPreferredSize(new Dimension(1300,768));
+				abouttext.setVerticalAlignment(SwingConstants.NORTH);
+				abouttext.setText("<html> <h3> Welcome to LogiCAD! </h3> <br>" +  
+						"LogiCAD is a digital circuit Computer-Aided Design application. " + 
+						"As you dive into our software you may notice several tools and menus at your disposal, so lets take a look at what we have to offer:<br>" +
+						"<br>" + 
+						"<br>" + 
+						"Top Menu Bar:<br>" + 
+						"<br>" + 
+						"-File: Drop down menu of the following:<br>" + 
+						"<br>" + 
+						"&ensp;  &ensp;  Save:  User is able to save project files.<br>" + 
+						"&ensp;  &ensp;  Load:  User is able to load previouse project files.<br>" + 
+						"&ensp;  &ensp;  Import Module:  User is able to save circuit designs as modules that can be loaded and used in future projects.<br>" + 
+						"&ensp;  &ensp;  Export Module:  A module is a completed circuit that is used after being saved as an element of another circuit.<br>" + 
+						"<br>" + 
+						"-Edit: Drop down menu of the following:<br>" + 
+						"<br>" + 
+						"-View: Drop down menu of the following:<br>" + 
+						"<br>" + 
+						"-Help: Drop down menu of the following:<br>" + 
+						"<br>" + 
+						"&ensp;  &ensp;  About:  Information about the software and button features.<br>" + 
+						"<br>" + 
+						"<br>" + 
+						"<br>" + 
+						"Gate Menu Bar:<br>" + 
+						"<br>" + 
+						"-AND Gate Button: An AND gate will appear on the grid workspace for a user to be able to work with. This logic gate must be given two inputs and will provide an output.<br>" + 
 						"\r\n" + 
-						"LogiCAD is a digital circuit Computer-Aided Design application.\r\n" + 
+						"-OR Gate Button: An OR gate will appear on the grid workspace for a user to be able to work with. This logic gate must be given two inputs and will provide an output.<br>" + 
 						"\r\n" + 
-						"As you dive into our software you may notice several tools and menus at your disposal, so lets take a look at what we have to offor:\r\n" + 
+						"-NOT Gate Button: A NOT gate will appear on the grid workspace for a user to be able to work with. This logic gate must be given one input and will provide an output.<br>" + 
 						"\r\n" + 
+						"-XOR Gate Button: An XOR gate will appear on the grid workspace for a user to be able to work with. This logic gate must be given two inputs and will provide an output.<br>" + 
 						"\r\n" + 
+						"-NAND Gate Button: A NAND gate will appear on the grid workspace for a user to be able to work with. This logic gate must be given two inputs and will provide an output.<br>" + 
 						"\r\n" + 
-						"Top Menu Bar:\r\n" + 
+						"-NOR Gate Button: A NOR gate will appear on the grid workspace for a user to be able to work with. This logic gate must be given two inputs and will provide an output.<br>" + 
 						"\r\n" + 
+						"-XNOR Gate Button: A XNOR gate will appear on the grid workspace for a user to be able to work with. This logic gate must be given two inputs and will provide an output.<br>" + 
 						"\r\n" + 
-						"-File: Drop down menu of the following:\r\n" + 
+						"-Input Gate Button: An Input wire will be presented to place on any logic gate or to attach to any other wires.<br>" + 
 						"\r\n" + 
-						"	Save: User is able to save project files.\r\n" + 
-						"	Load: User is able to load previouse project files.\r\n" + 
-						"	Import Module: User is able to save circuit designs as modules that can be loaded and used in future projects.  \r\n" + 
-						"	Export Module: A module is a completed circuit that is used after being saved as an element of another circuit.\r\n" + 
-						"\r\n" + 
-						"-Edit: Drop down menu of the following:\r\n" + 
-						"\r\n" + 
-						"-View: Drop down menu of the following:\r\n" + 
-						"\r\n" + 
-						"-Help: Drop down menu of the following:\r\n" + 
-						"\r\n" + 
-						"	About: Information about the software and button features.\r\n" + 
-						"\r\n" + 
-						"\r\n" + 
-						"\r\n" + 
-						"Gate Menu Bar:\r\n" + 
-						"\r\n" + 
-						"\r\n" + 
-						"-AND Gate Button: An AND gate will appear on the grid workspace for a user to be able to work with. This logic gate must be given two inputs and will provide an output.\r\n" + 
-						"\r\n" + 
-						"-OR Gate Button: An OR gate will appear on the grid workspace for a user to be able to work with. This logic gate must be given two inputs and will provide an output.\r\n" + 
-						"\r\n" + 
-						"-NOT Gate Button: A NOT gate will appear on the grid workspace for a user to be able to work with. This logic gate must be given one input and will provide an output.\r\n" + 
-						"\r\n" + 
-						"-XOR Gate Button: An XOR gate will appear on the grid workspace for a user to be able to work with. This logic gate must be given two inputs and will provide an output.\r\n" + 
-						"\r\n" + 
-						"-NAND Gate Button: A NAND gate will appear on the grid workspace for a user to be able to work with. This logic gate must be given two inputs and will provide an output.\r\n" + 
-						"\r\n" + 
-						"-NOR Gate Button: A NOR gate will appear on the grid workspace for a user to be able to work with. This logic gate must be given two inputs and will provide an output.\r\n" + 
-						"\r\n" + 
-						"-XNOR Gate Button: A XNOR gate will appear on the grid workspace for a user to be able to work with. This logic gate must be given two inputs and will provide an output.\r\n" + 
-						"\r\n" + 
-						"-Input Gate Button: An Input wire will be presented to place on any logic gate or to attach to any other wires.\r\n" + 
-						"\r\n" + 
-						"-Output Gate Button: An Output wire will be presented to place on any logic gate or to attach to any other wires.\r\n" + 
-						"\r\n" + 
-						"\r\n" + 
-						"\r\n" + 
+						"-Output Gate Button: An Output wire will be presented to place on any logic gate or to attach to any other wires.<br>" + 
+						"<br>" + 
+						"<br>" + 
+						"<br>" +
 						"Left Side Panel:\r\n" + 
-						"\r\n" + 
-						"\r\n" + 
-						"-This space displays your current working directory after you specify the file path.\r\n" + 
-						"\r\n" + 
-						"\r\n" + 
-						"\r\n" + 
-						"\r\n" + 
-						"Grid Workspace:\r\n" + 
-						"\r\n" + 
-						"\r\n" + 
-						"-This is the area a user will be given to work in.");
+						"<br>" + 
+						"<br>" + 
+						"-This space displays your current working directory after you specify the file path.<br>" + 
+						"<br>" + 
+						"<br>" + 
+						"Grid Workspace:<br>" + 
+						"<br>" + 
+						"-This is the area a user will be given to work in.<br>" +
+						"<br>" +
+						"<br>");
+						
+			
+				
+				JScrollPane aboutpane = new JScrollPane(abouttext);
+				JPanel about = new JPanel();
+				about.add(aboutpane);
+				aboutpane.getViewport().add(abouttext);
+				aboutpane.setPreferredSize(d);
+				JOptionPane.showMessageDialog(null, aboutpane);
+				
+				
 			}
 
 		});
+		
 		
 		menu.add(menuItem);
 		
