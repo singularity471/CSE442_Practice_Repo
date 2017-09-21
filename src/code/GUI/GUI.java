@@ -8,6 +8,8 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,21 +17,29 @@ import java.util.Collections;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
 import javax.swing.JToolBar;
+import javax.swing.JTree;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreePath;
+
+import com.sun.glass.events.MouseEvent;
 
 public class GUI {
-	
+	private JTree dirStructure;
 	public void run() {
 		
 		//Create JFrame
 		JFrame frame = new JFrame("LogiCAD");
-		JLabel gridSpaceLabel = new JLabel("Grid Workspace");
+		JLabel gridSpaceLabel = new JLabel();
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
@@ -45,7 +55,7 @@ public class GUI {
 		
 		JButton button = new JButton();
 		try {
-			Image img = ImageIO.read(this.getClass().getResource("/and_with_text.png"));
+			Image img = ImageIO.read(getClass().getResource("images/and_with_text.png"));
 			button.setIcon(new ImageIcon(img));
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -54,7 +64,7 @@ public class GUI {
 		
 		button = new JButton();
 		try {
-			Image img = ImageIO.read(this.getClass().getResource("/or_with_text.png"));
+			Image img = ImageIO.read(getClass().getResource("images/or_with_text.png"));
 			button.setIcon(new ImageIcon(img));
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -63,7 +73,7 @@ public class GUI {
 		
 		button = new JButton();
 		try {
-			Image img = ImageIO.read(this.getClass().getResource("/not_with_text.png"));
+			Image img = ImageIO.read(getClass().getResource("images/not_with_text.png"));
 			button.setIcon(new ImageIcon(img));
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -72,7 +82,7 @@ public class GUI {
 		
 		button = new JButton();
 		try {
-			Image img = ImageIO.read(this.getClass().getResource("/xor_with_text.png"));
+			Image img = ImageIO.read(getClass().getResource("images/xor_with_text.png"));
 			button.setIcon(new ImageIcon(img));
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -81,7 +91,7 @@ public class GUI {
 		
 		button = new JButton();
 		try {
-			Image img = ImageIO.read(this.getClass().getResource("/nand_with_text.png"));
+			Image img = ImageIO.read(getClass().getResource("images/nand_with_text.png"));
 			button.setIcon(new ImageIcon(img));
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -90,7 +100,7 @@ public class GUI {
 		
 		button = new JButton();
 		try {
-			Image img = ImageIO.read(this.getClass().getResource("/nor_with_text.png"));
+			Image img = ImageIO.read(getClass().getResource("images/nor_with_text.png"));
 			button.setIcon(new ImageIcon(img));
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -99,15 +109,19 @@ public class GUI {
 		
 		button = new JButton();
 		try {
-			Image img = ImageIO.read(this.getClass().getResource("/xnor_with_text.png"));
+			Image img = ImageIO.read(getClass().getResource("images/xnor_with_text.png"));
 			button.setIcon(new ImageIcon(img));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		gates_and_io.add(button);
+		
+		gates_and_io.addSeparator();
 		
 		button = new JButton("INPUT");
 		gates_and_io.add(button);
+		
+		gates_and_io.addSeparator();
 	
 		button = new JButton("OUTPUT");
 		gates_and_io.add(button);
@@ -115,6 +129,35 @@ public class GUI {
 		frame.getContentPane().add(gates_and_io, BorderLayout.NORTH);
 		
 		// End of JToolbar code
+		
+		// Add side-bar
+		// Expandable List     
+		DefaultMutableTreeNode falsetop = new DefaultMutableTreeNode("");
+		DefaultMutableTreeNode top = new DefaultMutableTreeNode("Project1");
+		DefaultMutableTreeNode child = new DefaultMutableTreeNode("Example Circuit One");
+		DefaultMutableTreeNode child2 = new DefaultMutableTreeNode("32bit ALU");
+		DefaultMutableTreeNode child3 = new DefaultMutableTreeNode("Carry Look Ahead Adder");
+		DefaultMutableTreeNode top2 = new DefaultMutableTreeNode("32bit CPU");
+		falsetop.add(top);
+		falsetop.add(top2);
+		top.add(child);
+		top2.add(child2);
+		top2.add(child3);
+		dirStructure = new JTree(falsetop);
+		dirStructure.setRootVisible(false);
+		JScrollPane treeView = new JScrollPane(dirStructure);
+		treeView.setPreferredSize(new Dimension(200,768));
+		dirStructure.expandRow(1);
+		dirStructure.expandRow(2);
+		
+		         
+		
+		frame.getContentPane().add(treeView, BorderLayout.WEST);
+		//frame.getContentPane().add(sideBar, BorderLayout.WEST);
+		// End add side-bar
+		
+		
+		// End example circuit button
 		
 		frame.getContentPane().add(gridSpaceLabel, BorderLayout.CENTER);
 		
