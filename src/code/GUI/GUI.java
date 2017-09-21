@@ -135,12 +135,20 @@ public class GUI {
 		sideBar.setPreferredSize(new Dimension(200, 768));
 		
 		// Expandable List     
+		DefaultMutableTreeNode falsetop = new DefaultMutableTreeNode("");
 		DefaultMutableTreeNode top = new DefaultMutableTreeNode("Example Project Directory");
 		DefaultMutableTreeNode child = new DefaultMutableTreeNode("Example Child");
+		DefaultMutableTreeNode child2 = new DefaultMutableTreeNode("Example Child 2");
+		DefaultMutableTreeNode child3 = new DefaultMutableTreeNode("Example Child 3");
+		DefaultMutableTreeNode top2 = new DefaultMutableTreeNode("Example Project Directory 2");
+		falsetop.add(top);
+		falsetop.add(top2);
 		top.add(child);
-		dirStructure = new JTree(top);
+		top2.add(child2);
+		child2.add(child3);
+		dirStructure = new JTree(falsetop);
+		dirStructure.setRootVisible(false);
 		JScrollPane treeView = new JScrollPane(dirStructure);
-		
 		treeView.setPreferredSize(new Dimension(200,768));
 		         
 		
