@@ -53,7 +53,7 @@ public class GUI {
 		
 		JButton button = new JButton();
 		try {
-			Image img = ImageIO.read(this.getClass().getResource("/and_with_text.png"));
+			Image img = ImageIO.read(getClass().getResource("images/and_with_text.png"));
 			button.setIcon(new ImageIcon(img));
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -62,7 +62,7 @@ public class GUI {
 		
 		button = new JButton();
 		try {
-			Image img = ImageIO.read(this.getClass().getResource("/or_with_text.png"));
+			Image img = ImageIO.read(getClass().getResource("images/or_with_text.png"));
 			button.setIcon(new ImageIcon(img));
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -71,7 +71,7 @@ public class GUI {
 		
 		button = new JButton();
 		try {
-			Image img = ImageIO.read(this.getClass().getResource("/not_with_text.png"));
+			Image img = ImageIO.read(getClass().getResource("images/not_with_text.png"));
 			button.setIcon(new ImageIcon(img));
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -80,7 +80,7 @@ public class GUI {
 		
 		button = new JButton();
 		try {
-			Image img = ImageIO.read(this.getClass().getResource("/xor_with_text.png"));
+			Image img = ImageIO.read(getClass().getResource("images/xor_with_text.png"));
 			button.setIcon(new ImageIcon(img));
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -89,7 +89,7 @@ public class GUI {
 		
 		button = new JButton();
 		try {
-			Image img = ImageIO.read(this.getClass().getResource("/nand_with_text.png"));
+			Image img = ImageIO.read(getClass().getResource("images/nand_with_text.png"));
 			button.setIcon(new ImageIcon(img));
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -98,7 +98,7 @@ public class GUI {
 		
 		button = new JButton();
 		try {
-			Image img = ImageIO.read(this.getClass().getResource("/nor_with_text.png"));
+			Image img = ImageIO.read(getClass().getResource("images/nor_with_text.png"));
 			button.setIcon(new ImageIcon(img));
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -107,7 +107,7 @@ public class GUI {
 		
 		button = new JButton();
 		try {
-			Image img = ImageIO.read(this.getClass().getResource("/xnor_with_text.png"));
+			Image img = ImageIO.read(getClass().getResource("images/xnor_with_text.png"));
 			button.setIcon(new ImageIcon(img));
 		} catch (IOException e) {
 			e.printStackTrace();
