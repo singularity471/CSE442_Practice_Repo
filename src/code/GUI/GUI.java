@@ -55,7 +55,7 @@ public class GUI {
 		
 		JButton button = new JButton();
 		try {
-			Image img = ImageIO.read(this.getClass().getResource("/and_with_text.png"));
+			Image img = ImageIO.read(getClass().getResource("images/and_with_text.png"));
 			button.setIcon(new ImageIcon(img));
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -64,7 +64,7 @@ public class GUI {
 		
 		button = new JButton();
 		try {
-			Image img = ImageIO.read(this.getClass().getResource("/or_with_text.png"));
+			Image img = ImageIO.read(getClass().getResource("images/or_with_text.png"));
 			button.setIcon(new ImageIcon(img));
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -73,7 +73,7 @@ public class GUI {
 		
 		button = new JButton();
 		try {
-			Image img = ImageIO.read(this.getClass().getResource("/not_with_text.png"));
+			Image img = ImageIO.read(getClass().getResource("images/not_with_text.png"));
 			button.setIcon(new ImageIcon(img));
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -82,7 +82,7 @@ public class GUI {
 		
 		button = new JButton();
 		try {
-			Image img = ImageIO.read(this.getClass().getResource("/xor_with_text.png"));
+			Image img = ImageIO.read(getClass().getResource("images/xor_with_text.png"));
 			button.setIcon(new ImageIcon(img));
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -91,7 +91,7 @@ public class GUI {
 		
 		button = new JButton();
 		try {
-			Image img = ImageIO.read(this.getClass().getResource("/nand_with_text.png"));
+			Image img = ImageIO.read(getClass().getResource("images/nand_with_text.png"));
 			button.setIcon(new ImageIcon(img));
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -100,7 +100,7 @@ public class GUI {
 		
 		button = new JButton();
 		try {
-			Image img = ImageIO.read(this.getClass().getResource("/nor_with_text.png"));
+			Image img = ImageIO.read(getClass().getResource("images/nor_with_text.png"));
 			button.setIcon(new ImageIcon(img));
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -109,7 +109,7 @@ public class GUI {
 		
 		button = new JButton();
 		try {
-			Image img = ImageIO.read(this.getClass().getResource("/xnor_with_text.png"));
+			Image img = ImageIO.read(getClass().getResource("images/xnor_with_text.png"));
 			button.setIcon(new ImageIcon(img));
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -131,37 +131,31 @@ public class GUI {
 		// End of JToolbar code
 		
 		// Add side-bar
-		JPanel sideBar = new JPanel();
-		sideBar.setPreferredSize(new Dimension(200, 768));
-		
 		// Expandable List     
 		DefaultMutableTreeNode falsetop = new DefaultMutableTreeNode("");
-		DefaultMutableTreeNode top = new DefaultMutableTreeNode("Example Project Directory");
-		DefaultMutableTreeNode child = new DefaultMutableTreeNode("Example Child");
-		DefaultMutableTreeNode child2 = new DefaultMutableTreeNode("Example Child 2");
-		DefaultMutableTreeNode child3 = new DefaultMutableTreeNode("Example Child 3");
-		DefaultMutableTreeNode top2 = new DefaultMutableTreeNode("Example Project Directory 2");
+		DefaultMutableTreeNode top = new DefaultMutableTreeNode("Project1");
+		DefaultMutableTreeNode child = new DefaultMutableTreeNode("Example Circuit One");
+		DefaultMutableTreeNode child2 = new DefaultMutableTreeNode("32bit ALU");
+		DefaultMutableTreeNode child3 = new DefaultMutableTreeNode("Carry Look Ahead Adder");
+		DefaultMutableTreeNode top2 = new DefaultMutableTreeNode("32bit CPU");
 		falsetop.add(top);
 		falsetop.add(top2);
 		top.add(child);
 		top2.add(child2);
-		child2.add(child3);
+		top2.add(child3);
 		dirStructure = new JTree(falsetop);
 		dirStructure.setRootVisible(false);
 		JScrollPane treeView = new JScrollPane(dirStructure);
 		treeView.setPreferredSize(new Dimension(200,768));
+		dirStructure.expandRow(1);
+		dirStructure.expandRow(2);
+		
 		         
 		
 		frame.getContentPane().add(treeView, BorderLayout.WEST);
 		//frame.getContentPane().add(sideBar, BorderLayout.WEST);
 		// End add side-bar
 		
-		
-		// Add example circuit button to Toolbar
-		
-		button = new JButton("DISPLAY EXAMPLE CIRCUIT");
-		gates_and_io.addSeparator();
-		gates_and_io.add(button);
 		
 		// End example circuit button
 		
