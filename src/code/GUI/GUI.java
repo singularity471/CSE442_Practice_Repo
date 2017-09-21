@@ -116,14 +116,26 @@ public class GUI {
 		}
 		gates_and_io.add(button);
 		
-		gates_and_io.addSeparator();
+	
 		
-		button = new JButton("INPUT");
+		button = new JButton();
+		try {
+			Image img = ImageIO.read(getClass().getResource("images/input.png"));
+			button.setIcon(new ImageIcon(img));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		gates_and_io.add(button);
 		
-		gates_and_io.addSeparator();
 	
-		button = new JButton("OUTPUT");
+	
+		button = new JButton();
+		try {
+			Image img = ImageIO.read(getClass().getResource("images/output.png"));
+			button.setIcon(new ImageIcon(img));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		gates_and_io.add(button);
 	
 		frame.getContentPane().add(gates_and_io, BorderLayout.NORTH);
