@@ -9,6 +9,9 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -173,6 +176,78 @@ public class GUI {
 		//Add About menu item
 		menuItem = new JMenuItem("About");
 		menuItem.setMnemonic(KeyEvent.VK_A);
+		
+		
+		//Create an action listener for the about menu
+		menuItem.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+				JOptionPane.showMessageDialog(null, "Welcome to LogiCAD!\r\n" + 
+						"\r\n" + 
+						"LogiCAD is a digital circuit Computer-Aided Design application.\r\n" + 
+						"\r\n" + 
+						"As you dive into our software you may notice several tools and menus at your disposal, so lets take a look at what we have to offor:\r\n" + 
+						"\r\n" + 
+						"\r\n" + 
+						"\r\n" + 
+						"Top Menu Bar:\r\n" + 
+						"\r\n" + 
+						"\r\n" + 
+						"-File: Drop down menu of the following:\r\n" + 
+						"\r\n" + 
+						"	Save: User is able to save project files.\r\n" + 
+						"	Load: User is able to load previouse project files.\r\n" + 
+						"	Import Module: User is able to save circuit designs as modules that can be loaded and used in future projects.  \r\n" + 
+						"	Export Module: A module is a completed circuit that is used after being saved as an element of another circuit.\r\n" + 
+						"\r\n" + 
+						"-Edit: Drop down menu of the following:\r\n" + 
+						"\r\n" + 
+						"-View: Drop down menu of the following:\r\n" + 
+						"\r\n" + 
+						"-Help: Drop down menu of the following:\r\n" + 
+						"\r\n" + 
+						"	About: Information about the software and button features.\r\n" + 
+						"\r\n" + 
+						"\r\n" + 
+						"\r\n" + 
+						"Gate Menu Bar:\r\n" + 
+						"\r\n" + 
+						"\r\n" + 
+						"-AND Gate Button: An AND gate will appear on the grid workspace for a user to be able to work with. This logic gate must be given two inputs and will provide an output.\r\n" + 
+						"\r\n" + 
+						"-OR Gate Button: An OR gate will appear on the grid workspace for a user to be able to work with. This logic gate must be given two inputs and will provide an output.\r\n" + 
+						"\r\n" + 
+						"-NOT Gate Button: A NOT gate will appear on the grid workspace for a user to be able to work with. This logic gate must be given one input and will provide an output.\r\n" + 
+						"\r\n" + 
+						"-XOR Gate Button: An XOR gate will appear on the grid workspace for a user to be able to work with. This logic gate must be given two inputs and will provide an output.\r\n" + 
+						"\r\n" + 
+						"-NAND Gate Button: A NAND gate will appear on the grid workspace for a user to be able to work with. This logic gate must be given two inputs and will provide an output.\r\n" + 
+						"\r\n" + 
+						"-NOR Gate Button: A NOR gate will appear on the grid workspace for a user to be able to work with. This logic gate must be given two inputs and will provide an output.\r\n" + 
+						"\r\n" + 
+						"-XNOR Gate Button: A XNOR gate will appear on the grid workspace for a user to be able to work with. This logic gate must be given two inputs and will provide an output.\r\n" + 
+						"\r\n" + 
+						"-Input Gate Button: An Input wire will be presented to place on any logic gate or to attach to any other wires.\r\n" + 
+						"\r\n" + 
+						"-Output Gate Button: An Output wire will be presented to place on any logic gate or to attach to any other wires.\r\n" + 
+						"\r\n" + 
+						"\r\n" + 
+						"\r\n" + 
+						"Left Side Panel:\r\n" + 
+						"\r\n" + 
+						"\r\n" + 
+						"-This space displays your current working directory after you specify the file path.\r\n" + 
+						"\r\n" + 
+						"\r\n" + 
+						"\r\n" + 
+						"\r\n" + 
+						"Grid Workspace:\r\n" + 
+						"\r\n" + 
+						"\r\n" + 
+						"-This is the area a user will be given to work in.");
+			}
+
+		});
+		
 		menu.add(menuItem);
 		
 		//Add Help Menu to Main Menu
@@ -180,16 +255,6 @@ public class GUI {
 			
 		//Set Main Menu as JMenuBar
 		frame.setJMenuBar(menuBar);
-		
-		//Create an action listener for the about menu
-		JMenuItem about = new JMenuItem("About");
-		about.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null, "message");
-			}
-		});
-		
-		
 		
 		//Pack contents of JFrame nicely
 		frame.pack();
