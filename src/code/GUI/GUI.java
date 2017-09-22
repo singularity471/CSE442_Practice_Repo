@@ -41,7 +41,23 @@ public class GUI {
 		
 		//Create JFrame
 		JFrame frame = new JFrame("LogiCAD");
+		
 		JLabel gridSpaceLabel = new JLabel();
+		
+		Image circuit_image;
+		try {
+			circuit_image = ImageIO.read(getClass().getResourceAsStream("images/sample_circuit2.png"));
+			gridSpaceLabel.setIcon(new ImageIcon(circuit_image));
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		gridSpaceLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		gridSpaceLabel.setVerticalAlignment(SwingConstants.CENTER);
+		
+		JScrollPane gridPane = new JScrollPane(gridSpaceLabel);
+		
+		
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
@@ -118,14 +134,26 @@ public class GUI {
 		}
 		gates_and_io.add(button);
 		
-		gates_and_io.addSeparator();
 		
-		button = new JButton("INPUT");
+		
+		button = new JButton();
+		try {
+			Image img = ImageIO.read(getClass().getResource("images/input.png"));
+			button.setIcon(new ImageIcon(img));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		gates_and_io.add(button);
 		
-		gates_and_io.addSeparator();
+		
 	
-		button = new JButton("OUTPUT");
+		button = new JButton();
+		try {
+			Image img = ImageIO.read(getClass().getResource("images/output.png"));
+			button.setIcon(new ImageIcon(img));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		gates_and_io.add(button);
 	
 		frame.getContentPane().add(gates_and_io, BorderLayout.NORTH);
@@ -161,7 +189,7 @@ public class GUI {
 		
 		// End example circuit button
 		
-		frame.getContentPane().add(gridSpaceLabel, BorderLayout.CENTER);
+		frame.getContentPane().add(gridPane, BorderLayout.CENTER);
 		
 		frame.getContentPane().setBackground(Color.GRAY);  //Clayton Test
 		
@@ -223,7 +251,7 @@ public class GUI {
 						JLabel abouttext = new JLabel();
 						abouttext.setHorizontalTextPosition(SwingConstants.CENTER);
 						abouttext.setVerticalTextPosition(SwingConstants.NORTH);
-						abouttext.setPreferredSize(new Dimension(1300,768));
+						abouttext.setPreferredSize(new Dimension(1366,768));
 						abouttext.setVerticalAlignment(SwingConstants.NORTH);
 						abouttext.setText("<html> <h3> Welcome to LogiCAD! </h3> <br>" +  
 								"LogiCAD is a digital circuit Computer-Aided Design application. " + 
