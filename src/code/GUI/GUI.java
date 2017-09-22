@@ -216,6 +216,8 @@ public class GUI {
 		menu.add(menuItem);
 		menuItem = new JMenuItem("Export Module");
 		menu.add(menuItem);
+		menuItem = new JMenuItem("Set Project Directory");
+		menu.add(menuItem);
 		
 		//Add File Menu to Main Menu
 		menuBar.add(menu);
@@ -225,6 +227,10 @@ public class GUI {
 		menu.setMnemonic(KeyEvent.VK_E);
 		menu.getAccessibleContext().setAccessibleDescription(
 		        "Edit Menu");
+		
+		menuItem = new JMenuItem("Options");
+		menu.add(menuItem);
+		
 		menuBar.add(menu);
 		
 		//Create View Menu
@@ -232,6 +238,10 @@ public class GUI {
 		menu.setMnemonic(KeyEvent.VK_V);
 		menu.getAccessibleContext().setAccessibleDescription(
 		        "View Menu");
+		
+		menuItem = new JMenuItem("Toggle Side-Bar");
+		menu.add(menuItem);
+		
 		menuBar.add(menu);
 		
 		//Create Help Menu
