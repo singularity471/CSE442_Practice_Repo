@@ -544,10 +544,10 @@ public class tests_for_model {
 			m.makeCircuitConnection(or7, out4);
 				
 			// A: A3 A2 A1 A0
-			in7.setInputValue(0); in5.setInputValue(1); in3.setInputValue(1); in0.setInputValue(1);
+			in7.setInputValue(1); in5.setInputValue(0); in3.setInputValue(1); in0.setInputValue(0);
 			
 			// B: B3 B2 B1 B0
-			in8.setInputValue(1); in6.setInputValue(0); in4.setInputValue(0); in1.setInputValue(0); 
+			in8.setInputValue(0); in6.setInputValue(1); in4.setInputValue(0); in1.setInputValue(1); 
 			
 			// Carry In
 			in2.setInputValue(0);
@@ -565,6 +565,8 @@ public class tests_for_model {
 			System.out.println("B3 B2 B1 B0: " + in8.getInputValue() + " " + in6.getInputValue() + " " + 
 					in4.getInputValue() + " " + in1.getInputValue() + ", In Decimal: " +
 					(in8.getInputValue() * 8 + in6.getInputValue() * 4 + in4.getInputValue() * 2 + in1.getInputValue() * 1));
+			
+			System.out.println("Cin: " + in2.getInputValue());
 			
 			System.out.println("S3 S2 S1 S0: " + out3.getOutputValue() + " " + out2.getOutputValue() + " " + 
 					out1.getOutputValue() + " " + out0.getOutputValue() + ", In Decimal: " +

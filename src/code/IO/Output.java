@@ -63,11 +63,11 @@ public class Output implements code.logicGates.In{
 	public void setID(String newID) {id = newID;}
 	
 	public void setXCoord(int newX) {
-		xCoord = newX;
+		setxCoord(newX);
 	}
 
 	public void setYCoord(int newY) {
-		yCoord = newY;
+		setyCoord(newY);
 	}
 
 	@Override
@@ -83,4 +83,32 @@ public class Output implements code.logicGates.In{
 	}
 	
 	public String getID() {return id;}
+
+	/**
+	 * @return the yCoord
+	 */
+	public int getyCoord() {
+		return yCoord;
+	}
+
+	/**
+	 * @param yCoord the yCoord to set
+	 */
+	public void setyCoord(int new_yCoord) {
+		yCoord = new_yCoord;
+	}
+
+	/**
+	 * @return the xCoord
+	 */
+	public int getxCoord() {
+		return xCoord;
+	}
+
+	/**
+	 * @param xCoord the xCoord to set
+	 */
+	public void setxCoord(int new_xCoord) {
+		xCoord = new_xCoord;
+	}
 }
