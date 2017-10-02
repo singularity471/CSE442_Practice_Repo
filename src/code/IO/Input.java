@@ -15,6 +15,7 @@ public class Input implements code.logicGates.In{
 	
 	private int xCoord, yCoord;
 	
+	
 	/*setter for the input value.*/
 	public void setInputValue(int newValue) {
 		value = newValue;

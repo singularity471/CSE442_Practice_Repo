@@ -28,26 +28,26 @@ public class Model {
 	public boolean makeCircuitConnection(Object parent, Object child) {
 		
 		// We are not allowing a child's output to feed into one of its inputs (no feedback)
-		if(parent == child) { return false;}
+		if(parent == child) {System.out.println("Can't add connection from child into parent!"); return false;}
 		
 		if(parent instanceof Gate) {
 			
 			Gate g = (Gate) parent;
 			ArrayList<Object> tree = g.getFamilyTree();
 		
-			if(tree.contains(child)) {  return false;}
+			if(tree.contains(child)) {System.out.println("Can't add a connection into predecessor!"); return false;}
 		}
 		else if(parent.getClass() == Output.class) {
 			Output o = (Output) parent;
 			ArrayList<Object> tree = o.getFamilyTree();
-			if(tree.contains(child)) {return false;}
+			if(tree.contains(child)) {System.out.println("Can't add a connection into predecessor!"); return false;}
 		}
 		
 		//We cannot allow an output to function as a parent, because it has only a single input
-		if(parent.getClass() == Output.class) { return false; }
+		if(parent.getClass() == Output.class) { System.out.println("Can't add a connection in which Output is parent!") ;return false; }
 		
 		// We cannot allow an input to function as a child, because it has only a single output
-		if(child.getClass() == Input.class) { return false; }
+		if(child.getClass() == Input.class) { System.out.println("Can't add a connection in which Input is child!"); return false; }
 		
 		// return value on attempt to make connection into the child
 		int inputNum = 5;
@@ -127,8 +127,8 @@ public class Model {
 		for(Object obj : workspaceElements) {
 			if(obj instanceof Gate) {
 				Gate g = (Gate) obj;
-				if(g instanceof notGate && g.getInput1Source() == null) {System.out.println("Missing Input Connections Exist!"); return false;}
-				if((g.getInput1Source() == null || g.getInput2Source() == null) && !(g instanceof notGate)) {System.out.println("Missing Input Connections Exist!"); return false;}
+				if(g instanceof notGate && g.getInput1Source() == null) {System.out.println("Missing Input Connections Exist!" + g); return false;}
+				if((g.getInput1Source() == null || g.getInput2Source() == null) && !(g instanceof notGate)) {System.out.println("Missing Input Connections Exist!" + g); return false;}
 				if(g.getChildren_Inputs1().isEmpty() && g.getChildren_Inputs2().isEmpty()) {System.out.println("Missing Output Connections Exist!"); return false;}
 			}
 			else if(obj.getClass() == Input.class) {
@@ -185,16 +185,16 @@ public class Model {
 				
 			}
 			
-			//printAllInputAndOutputValuesForAllCircuitElements();
-			//System.out.println("\n\n");
+			printAllInputAndOutputValuesForAllCircuitElements();
+			System.out.println("\n\n");
 			
-			//System.out.println(signalsLastPass + "\n" + signalsCurrentPass);
+			System.out.println(signalsLastPass + "\n" + signalsCurrentPass);
 			
 			
 		} while(!areListsEqual(signalsLastPass, signalsCurrentPass));
 		
 		for(Integer i : signalsCurrentPass) {
-			if(i.equals(new Integer(-1))){return false;}
+			if(i.equals(new Integer(-1))){System.out.println("At least one signal is still equal to -1!") ;return false;}
 		}
 		
 		return true;
