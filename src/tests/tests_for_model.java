@@ -363,6 +363,153 @@ public class tests_for_model {
 				
 		}
 		
+		// Test if removeCircuitElement works for a Gate
+		@Test public void checkFeedbackWithReverseConnectionBuilding() {
+			Model m = new Model();
+			
+			andGate and0 = new andGate();
+			xorGate xor0 = new xorGate();
+			orGate or0 = new orGate();
+		
+			m.addObjectToWorkspace(and0);
+			m.addObjectToWorkspace(xor0);
+			m.addObjectToWorkspace(or0);
+			
+			System.out.println(m.makeCircuitConnection(xor0, or0));
+			System.out.println(m.makeCircuitConnection(and0, xor0));
+			System.out.println(m.makeCircuitConnection(or0, and0));
+			
+			m.printAllFamilyTrees();
+			
+			//assertTrue("", expected==actual);
+				
+		}
+		
+		
+		// Test if removeCircuitElement works for a Gate
+		@Test public void connectTwoCircuitsTogetherBuiltSeparatelyAndCheckFamilyTrees() {
+			Model m = new Model();
+			
+			// Circuit 1
+			Input in0 = new Input();
+			xorGate xor0 = new xorGate();
+			andGate and0 = new andGate();
+			
+			m.addObjectToWorkspace(in0);
+			m.addObjectToWorkspace(xor0);
+			m.addObjectToWorkspace(and0);
+			
+			m.makeCircuitConnection(in0, and0);
+			m.makeCircuitConnection(xor0, and0);
+			
+			// Circuit 2
+			notGate not0 = new notGate();
+			xorGate xor1 = new xorGate();
+			andGate and1 = new andGate();
+			nandGate nand0 = new nandGate();
+			
+			m.addObjectToWorkspace(not0);
+			m.addObjectToWorkspace(and1);
+			m.addObjectToWorkspace(xor1);
+			m.addObjectToWorkspace(nand0);
+			
+			m.makeCircuitConnection(not0, nand0);
+			m.makeCircuitConnection(and1, nand0);
+			m.makeCircuitConnection(not0, and1);
+			m.makeCircuitConnection(xor1, and1);
+			
+			m.makeCircuitConnection(and0, not0);
+			
+			m.printAllFamilyTrees();
+			
+		
+			
+			
+			//assertTrue("", expected==actual);
+				
+		}
+		
+		// Test to see if a "degenerate" circuit consisting of just inputs and outputs is possible
+		// First we check a network of just one input connected to one output
+		// Next we check a network composed of three inputs connected to three outputs.
+		@Test public void inputOutputNetworks() {
+			
+			// First Network
+			Model m = new Model();
+			Input in0 = new Input();
+			Output out0 = new Output();
+			m.addObjectToWorkspace(in0); m.addObjectToWorkspace(out0);
+			boolean actual1 = m.makeCircuitConnection(in0, out0);
+			boolean expected1 = true;
+			in0.setInputValue(1);
+			boolean actual2 = m.evaluateCircuitNetwork();
+			boolean expected2 = true;
+			
+			// Second Network
+			Model m1 = new Model();
+			Input in1 = new Input();
+			Input in2 = new Input();
+			Input in3 = new Input();
+			Output out1 = new Output();
+			Output out2 = new Output();
+			Output out3 = new Output();
+			m1.addObjectToWorkspace(in1); m1.addObjectToWorkspace(in2); m1.addObjectToWorkspace(in3);
+			m1.addObjectToWorkspace(out1); m1.addObjectToWorkspace(out2); m1.addObjectToWorkspace(out3);
+			m1.makeCircuitConnection(in1, out1); m1.makeCircuitConnection(in2, out2); m1.makeCircuitConnection(in3, out3);
+			in1.setInputValue(1);
+			boolean actual3 = m1.evaluateCircuitNetwork();
+			boolean expected3 = true;
+			
+			assertTrue("", expected1 && actual1 && actual2 && expected2 && actual3 && expected3);
+		}
+		
+		
+		// Test if removeCircuitElement works for a Gate
+		@Test public void removeGateFromWorkspace() {
+			Model m = new Model();
+			
+			andGate and0 = new andGate();
+			xorGate xor0 = new xorGate();
+			orGate or0 = new orGate();
+			Input in0 = new Input();
+			Output out0 = new Output();
+			
+			m.addObjectToWorkspace(and0);
+			m.addObjectToWorkspace(xor0);
+			m.addObjectToWorkspace(or0);
+			m.addObjectToWorkspace(in0);
+			m.addObjectToWorkspace(out0);
+			
+			m.makeCircuitConnection(in0, and0);
+			m.makeCircuitConnection(and0, out0);
+			m.makeCircuitConnection(or0, and0);
+			m.makeCircuitConnection(and0, xor0);
+			m.makeCircuitConnection(or0, xor0);
+
+			m.printAllWorkspaceElements();
+			
+			m.printAllConnectionsForAllCircuitElements();
+			
+			m.printAllFamilyTrees();
+			
+			m.removeCircuitElement(and0);
+			
+			m.printAllConnectionsForAllCircuitElements();
+			
+			m.printAllWorkspaceElements();
+			
+			m.printAllFamilyTrees();
+			
+			System.out.println(and0.getInput1Source());
+			System.out.println(and0.getInput2Source());
+			System.out.println(and0.getChildren_Inputs1());
+			System.out.println(and0.getChildren_Inputs2());
+			System.out.println(and0.getFamilyTree());
+			
+			//assertTrue("", expected==actual);
+				
+		}
+		
 		// Tests for public boolean evaluateCircuitNetwork() {
 		@Test public void FourBitAdderTest() {
 			Model m = new Model();
@@ -577,9 +724,117 @@ public class tests_for_model {
 			
 			//assertTrue("", expected==actual);
 		}
+		
+		
 				
-				
-				
+		// Tests for public void removeCircuitElement(Object element) 
+		@Test public void removeInputFromWorkspace() {
+			Model m = new Model();
+			
+			// Circuit 1
+			Input in0 = new Input();
+			xorGate xor0 = new xorGate();
+			andGate and0 = new andGate();
+			
+			m.addObjectToWorkspace(in0);
+			m.addObjectToWorkspace(xor0);
+			m.addObjectToWorkspace(and0);
+			
+			m.makeCircuitConnection(in0, and0);
+			m.makeCircuitConnection(xor0, and0);
+			
+			// Circuit 2
+			notGate not0 = new notGate();
+			xorGate xor1 = new xorGate();
+			andGate and1 = new andGate();
+			nandGate nand0 = new nandGate();
+			
+			m.addObjectToWorkspace(not0);
+			m.addObjectToWorkspace(and1);
+			m.addObjectToWorkspace(xor1);
+			m.addObjectToWorkspace(nand0);
+			
+			m.makeCircuitConnection(not0, nand0);
+			m.makeCircuitConnection(and1, nand0);
+			m.makeCircuitConnection(not0, and1);
+			m.makeCircuitConnection(xor1, and1);
+			
+			// Connect two circuits together
+			m.makeCircuitConnection(and0, not0);
+			
+			m.printAllConnectionsForAllCircuitElements();
+			m.printAllFamilyTrees();
+			m.printAllWorkspaceElements();
+			
+			// Remove Input in0
+			m.removeCircuitElement(in0);
+			
+			m.printAllConnectionsForAllCircuitElements();
+			m.printAllFamilyTrees();
+			m.printAllWorkspaceElements();
+			
+			System.out.println(in0.getFamilyTree());
+			System.out.println(in0.getInput1Children());
+			System.out.println(in0.getInput2Children());
+			
+		}
+		
+		// Tests for public void removeCircuitElement(Object element) 
+		@Test public void removeOutputFromEmptyMdoel() {
+			Model m = new Model();
+			Output out0 = new Output();
+			m.addObjectToWorkspace(out0);
+			System.out.println(m.getWorkspaceElements());
+			m.removeCircuitElement(out0);
+			System.out.println(m.getWorkspaceElements());
+			
+		}
+		
+		// Tests for public void removeCircuitElement(Object element) 
+		@Test public void removeOutputFromCircuit() {
+			Model m = new Model();
+			
+			Input in0 = new Input();
+			Input in1 = new Input();
+			nandGate nand0 = new nandGate();
+			xnorGate xnor0 = new xnorGate();
+			norGate nor0 = new norGate();
+			Output out0 = new Output();
+			
+			m.addObjectToWorkspace(out0);
+			m.addObjectToWorkspace(in0);
+			m.addObjectToWorkspace(nand0);
+			m.addObjectToWorkspace(xnor0);
+			m.addObjectToWorkspace(nor0);
+			m.addObjectToWorkspace(in1);
+			
+			m.makeCircuitConnection(nor0, out0);
+			m.makeCircuitConnection(nand0, nor0);
+			m.makeCircuitConnection(in0, nand0);
+			m.makeCircuitConnection(in1, nand0);
+			m.makeCircuitConnection(xnor0, nor0);
+			m.makeCircuitConnection(in0, xnor0);
+			m.makeCircuitConnection(in1, xnor0);
+			
+			m.printAllConnectionsForAllCircuitElements();
+			m.printAllFamilyTrees();
+			m.printAllWorkspaceElements();
+			
+			System.out.println(out0.getFamilyTree());
+			System.out.println(out0.getInput());
+			
+			m.removeCircuitElement(out0);
+			
+			m.printAllConnectionsForAllCircuitElements();
+			m.printAllFamilyTrees();
+			m.printAllWorkspaceElements();
+			
+			System.out.println(out0.getFamilyTree());
+			System.out.println(out0.getInput());
+			
+			
+			
+		}
 		
 		
 		

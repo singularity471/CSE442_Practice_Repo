@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import code.logicGates.*;
 import code.IO.*;
 
+/**
+ * @author Ian
+ *
+ */
 public class Model {
 		
 	private int andGateNum = 0;
@@ -20,6 +24,217 @@ public class Model {
 	
 	
 	public ArrayList<Object> getWorkspaceElements(){return workspaceElements;}
+	
+	
+	
+	/**
+	 * This method removes all connections from circuitElemeent element both existing in itself
+	 * and by other elements connected to it.  It also visits every circuit element in workspaceElements
+	 * and removes element from any family tree in which it exists. It tells the coordinate system that
+	 * the element no longer is on the grid. Finally it removes it from the workspaceElements list.
+	 * 
+	 * @param element
+	 * 
+	 */
+	public void removeCircuitElement(Object element) {
+		
+		// --Step 1:--
+		// Look at the two or fewer circuit elements (parents) that feed into element
+		// In THOSE circuit elements, remove element as a child (remove from its list of outputs)
+		// After this is done, remove the circuit element as an input from element
+		// --Step 2:--
+		// Look at element's output connection.  For each circuit element that is connected, remove
+		// element as an input connection in THOSE circuit elements.
+		// After this is done, remove the circuit element from element's list of outputs.
+		// --Step 3:--
+		// Once all of element's inputs and outputs are removed, visit every circuit element and check
+		// if element is in its family tree.  If it is, remove it.
+		// --Step 4:--
+		// Remove all objects from element's FamilyTree
+		// --Step: 5:--
+		// Remove element from workspaceElements list. -- Done --
+		
+		
+		// For element of type Gate
+		if(element instanceof Gate) {
+			
+			Gate g = (Gate) element;
+			
+			// Step 1 Gate
+			if(g.getInput1Source() != null) {
+				Object input1Source = g.getInput1Source();
+				if(input1Source instanceof Input) {
+					Input in = (Input) input1Source;
+					ArrayList<Object> input1Children = in.getInput1Children();
+					input1Children.remove(element);
+				}
+				else if(input1Source instanceof Gate){
+					Gate gateSource = (Gate) input1Source;
+					ArrayList<Object> input1Children = gateSource.getChildren_Inputs1();
+					input1Children.remove(element);
+				}
+				g.removeInput1Source();
+			}
+			
+			if(g.getInput2Source() != null) {
+				Object input2Source = g.getInput2Source();
+				if(input2Source instanceof Input) {
+					Input in = (Input) input2Source;
+					ArrayList<Object> input2Children = in.getInput2Children();
+					input2Children.remove(element);
+				}
+				else if(input2Source instanceof Gate){
+					Gate gateSource = (Gate) input2Source;
+					ArrayList<Object> input2Children = gateSource.getChildren_Inputs2();
+					input2Children.remove(element);
+				}
+				g.removeInput2Source();
+			}
+			
+			// Step 2 Gate
+			ArrayList<Object> input1Children = g.getChildren_Inputs1();
+			System.out.println(g.getChildren_Inputs1());
+			for(Object child: input1Children) {
+				if(child instanceof Gate) {
+					Gate childGate = (Gate) child;
+					childGate.removeInput1Source();
+					System.out.println("was here");
+				}
+				else if(child instanceof Output) {
+					Output childOutput = (Output) child;
+					childOutput.removeInputSource();
+				}
+			}
+			input1Children.clear();
+			
+			ArrayList<Object> input2Children = g.getChildren_Inputs2();
+			for(Object child: input2Children) {
+				if(child instanceof Gate) {
+					Gate childGate = (Gate) child;
+					childGate.removeInput2Source();
+				}
+				else if(child instanceof Output) {
+					Output childOutput = (Output) child;
+					childOutput.removeInputSource();
+				}
+			}
+			input2Children.clear();
+			
+			System.out.println(g.getChildren_Inputs1());
+			
+			// Step 3 Gate
+			for(Object circuitElement: workspaceElements) {
+				if(circuitElement instanceof Gate) {
+					while(((Gate) circuitElement).getFamilyTree().remove(element)) {} // removes all instances of element in familyTree (this is considering the case where element was
+																		  			  // an input to both of circuitElement's inputs and thus existed in its family tree twice.
+				}
+				else if(circuitElement instanceof Input) {
+					while(((Input) circuitElement).getFamilyTree().remove(element)) {}
+				}
+				else if(circuitElement instanceof Output) {
+					while(((Output) circuitElement).getFamilyTree().remove(element)){}
+				}
+			}
+			
+			// Step 4 Gate
+			g.getFamilyTree().clear();
+			
+			// Step 5 Gate
+			workspaceElements.remove(element);
+
+		} // end if Gate
+		
+		// For element of type Input
+		else if(element instanceof Input) {
+			Input in = (Input) element;
+			
+			// Step 1 Input
+			// Input has no input connections, so skip step 1
+			
+			// Step 2 Input
+			ArrayList<Object> input1Children = in.getInput1Children();
+			for(Object child: input1Children) {
+				if(child instanceof Gate) {
+					((Gate) child).removeInput1Source();
+				}
+				else if(child instanceof Output) {
+					((Output) child).removeInputSource();
+				}
+			}
+			input1Children.clear();
+			
+			ArrayList<Object> input2Children = in.getInput2Children();
+			for(Object child: input2Children) {
+				if(child instanceof Gate) {
+					((Gate) child).removeInput2Source();
+				}
+				else if(child instanceof Output) {
+					((Output) child).removeInputSource();
+				}
+			}
+			input2Children.clear();
+		
+			// Step 3 Input
+			for(Object circuitElement: workspaceElements) {
+				if(circuitElement instanceof Gate) {
+					while(((Gate) circuitElement).getFamilyTree().remove(element)) {} // removes all instances of element in familyTree (this is considering the case where element was
+																		  			  // an input to both of circuitElement's inputs and thus existed in its family tree twice.
+				}
+				else if(circuitElement instanceof Input) {
+					while(((Input) circuitElement).getFamilyTree().remove(element)) {}
+				}
+				else if(circuitElement instanceof Output) {
+					while(((Output) circuitElement).getFamilyTree().remove(element)){}
+				}
+			}
+			// Step 4 Input
+			in.getFamilyTree().clear();
+			// Step 5 Input
+			workspaceElements.remove(element);
+		}
+
+		// For element of type Output
+		else if(element instanceof Output) {
+			// Step 1 Output
+			Output out = (Output) element;
+			if(out.getInput() != null) {
+				Object inputSource = out.getInput();
+				if(inputSource instanceof Input) {
+					Input in = (Input) inputSource;
+					in.getInput1Children().remove(element);
+				}
+				else if(inputSource instanceof Gate) {
+					Gate gateSource = (Gate) inputSource;
+					gateSource.getChildren_Inputs1().remove(element);
+				}
+				out.removeInputSource();
+			}
+			
+			// Step 2 Output
+			// An output has no output connections, so skip step 2
+			
+			// Step 3 Output
+			for(Object circuitElement: workspaceElements) {
+				if(circuitElement instanceof Gate) {
+					while(((Gate) circuitElement).getFamilyTree().remove(element)) {} // removes all instances of element in familyTree (this is considering the case where element was
+																		  			  // an input to both of circuitElement's inputs and thus existed in its family tree twice.
+				}
+				else if(circuitElement instanceof Input) {
+					while(((Input) circuitElement).getFamilyTree().remove(element)) {}
+				}
+				else if(circuitElement instanceof Output) {
+					while(((Output) circuitElement).getFamilyTree().remove(element)){}
+				}
+			}
+			
+			// Step 4 Output
+			out.getFamilyTree().clear();
+			// Step 5 Output
+			workspaceElements.remove(element);
+		}
+		
+		
+	}
 	
 	/*
 	 * This method allows for a connection in the circuit to be made.
@@ -74,6 +289,7 @@ public class Model {
 		else if(child instanceof Gate) {
 			Gate childGate = (Gate) child;
 			inputNum = childGate.setInput(parent);
+			propagateFamilyTreeToAllChildren(childGate);
 			
 			if(inputNum == 0) {return false;}
 			else if(inputNum == 1) {
@@ -113,7 +329,80 @@ public class Model {
 		
 	} // end of MakeCircuitConnection
 	
+	// Adds members of childGate's familyTree to the familyTrees of all of its childrens' familyTrees.
+	// This accounts for the case where a circuit is built in a different order than starting from inputs and
+	// going to outputs, so that all children are aware of all their ancestors.  Otherwise, they would be missing some.
+	private void propagateFamilyTreeToAllChildren(Gate childGate) {
+		
+		System.out.println("propagateFamilyTreeToAllChildren("+ childGate);
+		
+		// We will add all children of childGate to an ArrayList.  Once all children are added, we will visit every child
+		// from index 0 up till there are no more children to visit, and update that child's familyTree to include all members 
+		// in childGate's familyTree.  
+		
+		ArrayList<Object> childrenOfChildGate = new ArrayList<Object>();
+		ArrayList<Object> outputsIntoInputs1ChildGate = childGate.getChildren_Inputs1();
+		ArrayList<Object> outputsIntoInputs2ChildGate = childGate.getChildren_Inputs2();
+		ArrayList<Object> familyTreeChildGate = childGate.getFamilyTree();
+		
+		// Add all of childGate's direct children to childrenOfChildGate
+		for(Object obj: outputsIntoInputs1ChildGate) {
+			if(!childrenOfChildGate.contains(obj)) {
+				childrenOfChildGate.add(obj);
+			}
+		}
+		for(Object obj: outputsIntoInputs2ChildGate) {
+			if(!childrenOfChildGate.contains(obj)) {
+				childrenOfChildGate.add(obj);
+			}
+		}
+		
+		while(!childrenOfChildGate.isEmpty()) {
+			Object currentChild = (Object) childrenOfChildGate.get(0);
+			
+			if(currentChild instanceof Output) {
+				// Outputs have no children, so don't have to worry about adding children here
+				// Just update its family tree and remove it from childrenOfChildGate
+				Output out = (Output) currentChild;
+				for(Object newAncestor: familyTreeChildGate) {
+					if(!out.getFamilyTree().contains(newAncestor)) {
+						(out.getFamilyTree()).add(newAncestor);
+					}
+				}
+				childrenOfChildGate.remove(0);
+			}
+			else if(currentChild instanceof Gate) {
+				// Add all children of currentChild to childrenOfChildGate
+				Gate currentChildGate = (Gate) currentChild;
+				ArrayList<Object> outputsIntoInputs1CurrentChild = currentChildGate.getChildren_Inputs1();
+				ArrayList<Object> outputsIntoInputs2CurrentChild = currentChildGate.getChildren_Inputs2();
+				for(Object obj: outputsIntoInputs1CurrentChild) {
+					if(!childrenOfChildGate.contains(obj)) {
+						childrenOfChildGate.add(obj);
+					}
+				}
+				for(Object obj: outputsIntoInputs2CurrentChild) {
+					if(!childrenOfChildGate.contains(obj)) {
+						childrenOfChildGate.add(obj);
+					}
+				}
+				// Update family tree of currentChild
+				for(Object newAncestor: familyTreeChildGate) {
+					if(!currentChildGate.getFamilyTree().contains(newAncestor)) {
+						currentChildGate.getFamilyTree().add(newAncestor);
+					}
+				}
+				// remove currentChild from childrenOfChildGate
+				childrenOfChildGate.remove(0);
+			}
+			// else if(currentChild instanceof Input) ***Note that this can never happen***
+			
+		}
 	
+	}
+
+
+
 	// This method propagates the signals in the network from gate to gate over and over again
 	// until no more change is happening.  This final state corresponds to the settled state when
 	// the outputs have the expected outputs from the inputs through the network.  If any connections
@@ -186,7 +475,7 @@ public class Model {
 			}
 			
 			printAllInputAndOutputValuesForAllCircuitElements();
-			System.out.println("\n\n");
+			System.out.println("");
 			
 			System.out.println(signalsLastPass + "\n" + signalsCurrentPass);
 			
@@ -401,6 +690,28 @@ public class Model {
 		
 	}
 	
+	public void printAllWorkspaceElements() {
+		for(Object obj: workspaceElements) {
+			System.out.println(obj);
+		}
+	}
+	
+	
+	public void printAllFamilyTrees() {
+		
+		System.out.println("Family Trees All Circuit Elements: ");
+		for(Object obj: workspaceElements) {
+			if(obj instanceof Gate) {
+				System.out.println(obj + " " + ((Gate) obj).getID() + " " + ((Gate) obj).getFamilyTree() );
+			}
+			else if(obj instanceof Input) {
+				System.out.println(obj + " " + ((Input) obj).getID() + " " + ((Input) obj).getFamilyTree() );
+			}
+			else if(obj instanceof Output) {
+				System.out.println(obj + " " + ((Output) obj).getID() + " " + ((Output) obj).getFamilyTree() );
+			}
+		}
+	}
 	
 	
 	

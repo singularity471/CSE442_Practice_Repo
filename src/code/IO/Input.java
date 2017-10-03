@@ -48,7 +48,11 @@ public class Input implements code.logicGates.In{
 	
 	public ArrayList<Object> getFamilyTree(){ return familyTree; }
 	
-	public void addToFamilyTree(Object newRelative) { familyTree.add(newRelative); }
+	public void addToFamilyTree(Object newRelative) { 
+		if(!familyTree.contains(newRelative)) {
+			familyTree.add(newRelative); 
+		}
+	}
 	
 	public void setID(String newID) {id = newID;}
 	

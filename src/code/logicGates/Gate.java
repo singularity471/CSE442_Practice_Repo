@@ -115,7 +115,11 @@ public abstract class Gate implements In, Out {
 	
 	public ArrayList<Object> getFamilyTree(){ return familyTree; }
 	
-	public void addToFamilyTree(Object newRelative) { familyTree.add(newRelative); }
+	public void addToFamilyTree(Object newRelative) {
+		if(!familyTree.contains(newRelative)) {
+			familyTree.add(newRelative); 
+		}
+	}
 	
 	public void setID(String newID) {id = newID;}
 	
@@ -127,6 +131,14 @@ public abstract class Gate implements In, Out {
 
 	public void setYCoord(int newY) {
 		yCoord = newY;
+	}
+	
+	public void removeInput1Source() {
+		input1Source = null;
+	}
+	
+	public void removeInput2Source() {
+		input2Source = null;
 	}
 
 }
