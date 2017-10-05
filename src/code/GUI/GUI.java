@@ -330,14 +330,14 @@ public class GUI {
 				      //no overlapping gates  
 				        	CEBTypetemp = circuitElementButtonClicked;
 				        	for (ImageCoordAndType temp : imageInfo) {
-				        		int clicklowx = e.getX()-70;
-				        		int clickhighx = e.getX()+70;
-				        		int clicklowy = e.getY()-35;
-				        		int clickhighy = e.getY()+35;
-				        		int lowy = temp.getUpperLeftImageY()-10;
-				        		int lowx = temp.getUpperLeftImageX()-20;
-				        		int highy=lowy+60;
-				        		int highx=lowx+120;
+				        		int clicklowx = e.getX()-50;
+				        		int clickhighx = e.getX()+50;
+				        		int clicklowy = e.getY()-25;
+				        		int clickhighy = e.getY()+25;
+				        		int lowy = temp.getUpperLeftImageY();
+				        		int lowx = temp.getUpperLeftImageX();
+				        		int highy=lowy+50;
+				        		int highx=lowx+100;
 				        		int bufferlowy = lowy-10;
 				        		int bufferlowx = lowx-20;
 				        		int bufferhighy= highy+10;
@@ -346,13 +346,13 @@ public class GUI {
 				        		if ((((clicklowx<=highx) && (clicklowx>=lowx)) && ((clicklowy<=highy) && (clicklowy>=lowy)))) {
 				        			circuitElementButtonClicked = -1;
 				        		}
-				        		else if ((((clicklowx<=highx) && (clicklowx>=lowx)) && ((clickhighy<=highy) && (clickhighy>=lowy)))) {
+				        		if ((((clicklowx<=highx) && (clicklowx>=lowx)) && ((clickhighy<=highy) && (clickhighy>=lowy)))) {
 				        			circuitElementButtonClicked = -1;
 				        		}
-				        		else if ((((clickhighx<=highx) && (clickhighx>=lowx)) && ((clicklowy<=highy) && (clicklowy>=lowy)))) {
+				        		if ((((clickhighx<=highx) && (clickhighx>=lowx)) && ((clicklowy<=highy) && (clicklowy>=lowy)))) {
 				        			circuitElementButtonClicked = -1;
 				        		}
-				        		else if ((((clickhighx<=highx) && (clickhighx>=lowx)) && ((clickhighy<=highy) && (clickhighy>=lowy)))) {
+				        		if ((((clickhighx<=highx) && (clickhighx>=lowx)) && ((clickhighy<=highy) && (clickhighy>=lowy)))) {
 				        			circuitElementButtonClicked = -1;
 				        		}
 				        		
