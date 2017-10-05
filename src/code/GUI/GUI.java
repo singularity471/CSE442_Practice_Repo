@@ -86,7 +86,7 @@ public class GUI {
 	private static final int XNOR_BUTTON = 6;
 	private static final int INPUT_BUTTON = 7;
 	private static final int OUTPUT_BUTTON = 8;
-	private int CEBTypetemp = 1;
+	private int CEBTypetemp = -1;
 	private int circuitElementButtonClicked = INVALID;
 	
 	private JTree dirStructure;
