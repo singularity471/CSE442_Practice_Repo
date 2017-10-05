@@ -336,16 +336,16 @@ public class GUI {
 				        		int lowx = temp.getUpperLeftImageX();
 				        		int highy=lowy+50;
 				        		int highx=lowx+100;
-				        		if ((((clicklowx<highx) && (clicklowx>lowx)) && ((clicklowy<highy) && (clicklowy>lowy)))) {
+				        		if ((((clicklowx<=highx) && (clicklowx>=lowx)) && ((clicklowy<=highy) && (clicklowy>=lowy)))) {
 				        			circuitElementButtonClicked = -1;
 				        		}
-				        		if ((((clicklowx<highx) && (clicklowx>lowx)) && ((clickhighy<highy) && (clickhighy>lowy)))) {
+				        		if ((((clicklowx<=highx) && (clicklowx>=lowx)) && ((clickhighy<=highy) && (clickhighy>=lowy)))) {
 				        			circuitElementButtonClicked = -1;
 				        		}
-				        		if ((((clickhighx<highx) && (clickhighx>lowx)) && ((clicklowy<highy) && (clicklowy>lowy)))) {
+				        		if ((((clickhighx<=highx) && (clickhighx>=lowx)) && ((clicklowy<=highy) && (clicklowy>=lowy)))) {
 				        			circuitElementButtonClicked = -1;
 				        		}
-				        		if ((((clickhighx<highx) && (clickhighx>lowx)) && ((clickhighy<highy) && (clickhighy>lowy)))) {
+				        		if ((((clickhighx<=highx) && (clickhighx>=lowx)) && ((clickhighy<=highy) && (clickhighy>=lowy)))) {
 				        			circuitElementButtonClicked = -1;
 				        		}
 				        	}
