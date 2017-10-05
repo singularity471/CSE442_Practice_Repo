@@ -1,6 +1,9 @@
 package code.driver;
 
+
 import java.util.ArrayList;
+
+import javax.swing.UnsupportedLookAndFeelException;
 
 import code.GUI.GUI;
 
@@ -10,9 +13,9 @@ import code.logicGates.*;
 
 public class driver {
 	
-	public static void main(String[] args) {	
+	public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {	
 	
-		//Model m = new Model();
+		javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
 		GUI gui = new GUI();
 		gui.run();
 	}
