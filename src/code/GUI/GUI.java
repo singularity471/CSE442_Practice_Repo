@@ -336,6 +336,7 @@ public class GUI {
 				        		int lowx = temp.getUpperLeftImageX();
 				        		int highy=lowy+50;
 				        		int highx=lowx+100;
+				        		int CEBTypetemp = circuitElementButtonClicked;
 				        		if ((((clicklowx<=highx) && (clicklowx>=lowx)) && ((clicklowy<=highy) && (clicklowy>=lowy)))) {
 				        			circuitElementButtonClicked = -1;
 				        		}
@@ -405,8 +406,8 @@ public class GUI {
 				JComponent newContentPane = new ScrollDemo2();
 		        newContentPane.setOpaque(true); //content panes must be opaque
 		        frame.setContentPane(newContentPane);
-		 
-				    
+		        circuitElementButtonClicked=CEBTypetemp; 
+		         
 				 
 				    
 				 
