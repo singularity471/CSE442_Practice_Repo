@@ -86,7 +86,7 @@ public class GUI {
 	private static final int XNOR_BUTTON = 6;
 	private static final int INPUT_BUTTON = 7;
 	private static final int OUTPUT_BUTTON = 8;
-	
+	private int CEBTypetemp = 1;
 	private int circuitElementButtonClicked = INVALID;
 	
 	private JTree dirStructure;
@@ -314,6 +314,7 @@ public class GUI {
 				    public void mouseReleased(MouseEvent e) {
 				        final int W = 100;
 				        final int H = 100;
+				        CEBTypetemp = circuitElementButtonClicked;
 				        boolean changed = false;
 				        if (SwingUtilities.isRightMouseButton(e)) {
 				            //This will clear the graphic objects.
@@ -336,7 +337,7 @@ public class GUI {
 				        		int lowx = temp.getUpperLeftImageX();
 				        		int highy=lowy+50;
 				        		int highx=lowx+100;
-				        		int CEBTypetemp = circuitElementButtonClicked;
+				        	  
 				        		if ((((clicklowx<=highx) && (clicklowx>=lowx)) && ((clicklowy<=highy) && (clicklowy>=lowy)))) {
 				        			circuitElementButtonClicked = -1;
 				        		}
@@ -402,11 +403,11 @@ public class GUI {
 				    
 				    
 				}
-				
+				circuitElementButtonClicked=CEBTypetemp;
 				JComponent newContentPane = new ScrollDemo2();
 		        newContentPane.setOpaque(true); //content panes must be opaque
 		        frame.setContentPane(newContentPane);
-		        circuitElementButtonClicked=CEBTypetemp; 
+		         
 		         
 				 
 				    
