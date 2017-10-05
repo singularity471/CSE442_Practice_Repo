@@ -1,42 +1,37 @@
 package code.GUI;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
 
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JSplitPane;
-import javax.swing.JToolBar;
-import javax.swing.JTree;
-import javax.swing.SwingConstants;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
 
+//import java_practice.ScrollDemo2.DrawingPane;
 
-public class GUI {
+import javax.swing.*;
+import javax.swing.event.MouseInputAdapter;
+import java.awt.*;
+import java.awt.event.*;
+import java.io.IOException;
+import java.util.*;
+ 
+
+//import java_practice.ScrollDemo2.DrawingPane;
+
+
+public class GUI{
 	private JTree dirStructure;
+	
+    private ArrayList<Image> circuitElementImages = new ArrayList<Image>();
+    private ArrayList<Integer> x_vals = new ArrayList<Integer>();
+    private ArrayList<Integer> y_vals = new ArrayList<Integer>();
+    private ArrayList<Image> elementTypes = new ArrayList<Image>();
+    
 	public void run() {
 		
 		//Test with multiple reviewers
@@ -54,23 +49,246 @@ public class GUI {
 			e.printStackTrace();
 		}
 		
-		JLabel gridSpaceLabel = new JLabel();
+//		JLabel gridSpaceLabel = new JLabel();
+//		
+//		Image circuit_image;
+//		try {
+//			circuit_image = ImageIO.read(getClass().getResourceAsStream("images/sample_circuit2.png"));
+//			gridSpaceLabel.setIcon(new ImageIcon(circuit_image));
+//		} catch (IOException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
+//		gridSpaceLabel.setHorizontalAlignment(SwingConstants.CENTER);
+//		gridSpaceLabel.setVerticalAlignment(SwingConstants.CENTER);
+//		
+//		JScrollPane gridPane = new JScrollPane(gridSpaceLabel);
 		
-		Image circuit_image;
-		try {
-			circuit_image = ImageIO.read(getClass().getResourceAsStream("images/sample_circuit2.png"));
-			gridSpaceLabel.setIcon(new ImageIcon(circuit_image));
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+//////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////TEST WORKSPACE///////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////		
+		 
+		/* ScrollDemo2.java requires no other files. */
+		class ScrollDemo2 extends JPanel
+		                         implements MouseListener {
+		    private Dimension area; //indicates area taken up by graphics
+		    private Vector<Rectangle> circles; //coordinates used to draw graphics
+		    private JPanel drawingPane;
+		    private int x;
+		    private int y;
+		    private ArrayList<Image> circuitElementImages = new ArrayList<Image>();
+		    private ArrayList<Integer> x_vals = new ArrayList<Integer>();
+		    private ArrayList<Integer> y_vals = new ArrayList<Integer>();
+		    private ArrayList<Image> elementTypes = new ArrayList<Image>();
+		 
+		    private final Color colors[] = {
+		        Color.red, Color.blue, Color.green, Color.orange,
+		        Color.cyan, Color.magenta, Color.darkGray, Color.yellow};
+		    private final int color_n = colors.length;
+		 
+		    public ScrollDemo2() {
+		        super(new BorderLayout());
+		        
+		        initializeImageContainer();
+		 
+		        area = new Dimension(0,0);
+		        circles = new Vector<Rectangle>();
+		 
+		        //Set up the instructions.
+//		        JLabel instructionsLeft = new JLabel(
+//		                        "Click left mouse button to place a circle.");
+//		        JLabel instructionsRight = new JLabel(
+//		                        "Click right mouse button to clear drawing area.");
+//		        JPanel instructionPanel = new JPanel(new GridLayout(0,1));
+//		        instructionPanel.setFocusable(true);
+//		        instructionPanel.add(instructionsLeft);
+//		        instructionPanel.add(instructionsRight);
+		 
+		        //Set up the drawing area.
+		        drawingPane = new DrawingPane();
+		        drawingPane.setBackground(Color.white);
+		        drawingPane.addMouseListener(this);
+		 
+		        //Put the drawing area in a scroll pane.
+		        JScrollPane scroller = new JScrollPane(drawingPane);
+		        scroller.setPreferredSize(new Dimension(200,200));
+		 
+		        //Lay out this demo.
+		        //add(instructionPanel, BorderLayout.PAGE_START);
+		        add(scroller, BorderLayout.CENTER);
+		    }
+		 
+		    /** The component inside the scroll pane. */
+		    class DrawingPane extends JPanel {
+		        protected void paintComponent(Graphics g) {
+		            super.paintComponent(g);
+		            
+		            for(int i = 0; i < circuitElementImages.size(); ++i) {
+		            	g.drawImage(circuitElementImages.get(i), x_vals.get(i), y_vals.get(i), null);
+		            }
+		           
+		            	 
+//		            Rectangle rect;
+//		            for (int i = 0; i < circles.size(); i++) {
+//		                rect = circles.elementAt(i);
+//		                g.setColor(colors[(i % color_n)]);
+//		                g.fillOval(rect.x, rect.y, rect.width, rect.height);
+//		            }
+		            
+		            
+		        }
+		    }
+		    
+		    public void initializeImageContainer() {
+		    	Image img = null;
+		    	for(int i = 0; i < 9; ++i) {
+		    		switch (i) {
+		    			case 0:
+		    				
+		    	            try {
+		    	    			img = ImageIO.read(getClass().getResource("images/and_with_text.png"));
+		    	    		} catch (IOException exp) {
+		    	    			exp.printStackTrace();
+		    	    		}
+		    	            elementTypes.add(img);
+		    				break;
+		    			case 1:
+		    				
+		    	            try {
+		    	    			img = ImageIO.read(getClass().getResource("images/and_with_text.png"));
+		    	    		} catch (IOException exp) {
+		    	    			exp.printStackTrace();
+		    	    		}
+		    	            elementTypes.add(img);
+		        			break;
+		    			case 2:
+		    				
+		    	            try {
+		    	    			img = ImageIO.read(getClass().getResource("images/and_with_text.png"));
+		    	    		} catch (IOException exp) {
+		    	    			exp.printStackTrace();
+		    	    		}
+		    	            elementTypes.add(img);
+		        			break;
+		    			case 3:
+		    				
+		    	            try {
+		    	    			img = ImageIO.read(getClass().getResource("images/and_with_text.png"));
+		    	    		} catch (IOException exp) {
+		    	    			exp.printStackTrace();
+		    	    		}
+		    	            elementTypes.add(img);
+		        			break;
+		    			case 4:
+		    				try {
+		    	    			img = ImageIO.read(getClass().getResource("images/and_with_text.png"));
+		    	    		} catch (IOException exp) {
+		    	    			exp.printStackTrace();
+		    	    		}
+		    				elementTypes.add(img);
+		        			break;
+		    			case 5:
+		    				try {
+		    	    			img = ImageIO.read(getClass().getResource("images/and_with_text.png"));
+		    	    		} catch (IOException exp) {
+		    	    			exp.printStackTrace();
+		    	    		}
+		    				elementTypes.add(img);
+		        			break;
+		    			case 6:
+		    				try {
+		    	    			img = ImageIO.read(getClass().getResource("images/and_with_text.png"));
+		    	    		} catch (IOException exp) {
+		    	    			exp.printStackTrace();
+		    	    		}
+		    				elementTypes.add(img);
+		        			break;
+		    			case 7:try {
+			    			img = ImageIO.read(getClass().getResource("images/and_with_text.png"));
+				    		} catch (IOException exp) {
+				    			exp.printStackTrace();
+				    		}
+		    				elementTypes.add(img);
+		        			break;
+		    			case 8:
+		    				try {
+		    	    			img = ImageIO.read(getClass().getResource("images/and_with_text.png"));
+		    	    		} catch (IOException exp) {
+		    	    			exp.printStackTrace();
+		    	    		}
+		    				elementTypes.add(img);
+		        			break;
+		    		}
+		    			
+		    	}
+		    	
+		    }
+		    
+		  //Handle mouse events.
+		    public void mouseReleased(MouseEvent e) {
+		        final int W = 100;
+		        final int H = 100;
+		        boolean changed = false;
+		        if (SwingUtilities.isRightMouseButton(e)) {
+		            //This will clear the graphic objects.
+		            circles.removeAllElements();
+		            area.width=0;
+		            area.height=0;
+		            changed = true;
+		        } else {
+		        	
+		            int x = e.getX() - W/2;
+		            int y = e.getY() - H/2;
+		            this.x = x;
+		            this.y = y;
+		            System.out.println(this.x);
+		            System.out.println(this.y);
+		            
+		            circuitElementImages.add(elementTypes.get(0));
+		            x_vals.add(new Integer(e.getX()));
+		            y_vals.add(new Integer(e.getY()));
+		            
+		            if (x < 0) x = 0;
+		            if (y < 0) y = 0;
+		            Rectangle rect = new Rectangle(x, y, W, H);
+		            circles.addElement(rect);
+		            drawingPane.scrollRectToVisible(rect);
+		 
+		            int this_width = (x + W + 2);
+		            if (this_width > area.width) {
+		                area.width = this_width; changed=true;
+		            }
+		 
+		            int this_height = (y + H + 2);
+		            if (this_height > area.height) {
+		                area.height = this_height; changed=true;
+		            }
+		        }
+		        if (changed) {
+		            //Update client's preferred size because
+		            //the area taken up by the graphics has
+		            //gotten larger or smaller (if cleared).
+		            drawingPane.setPreferredSize(area);
+		 
+		            //Let the scroll pane know to update itself
+		            //and its scrollbars.
+		            drawingPane.revalidate();
+		        }
+		        drawingPane.repaint();
+		    }
+		    public void mouseClicked(MouseEvent e){}
+		    public void mouseEntered(MouseEvent e){}
+		    public void mouseExited(MouseEvent e){}
+		    public void mousePressed(MouseEvent e){}
+		   
 		}
-		gridSpaceLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		gridSpaceLabel.setVerticalAlignment(SwingConstants.CENTER);
+		JComponent newContentPane = new ScrollDemo2();
+		newContentPane.setOpaque(true);
+		frame.setContentPane(newContentPane);
 		
-		JScrollPane gridPane = new JScrollPane(gridSpaceLabel);
-		
-		
-		
+//////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////TEST WORKSPACE///////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		Dimension d = new Dimension(1366,768);
@@ -201,7 +419,7 @@ public class GUI {
 		
 		// End example circuit button
 		
-		frame.getContentPane().add(gridPane, BorderLayout.CENTER);
+		//frame.getContentPane().add(gridPane, BorderLayout.CENTER);
 		
 		frame.getContentPane().setBackground(Color.GRAY);  //Clayton Test
 		
