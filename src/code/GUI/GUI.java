@@ -314,7 +314,7 @@ public class GUI {
 				    public void mouseReleased(MouseEvent e) {
 				        final int W = 100;
 				        final int H = 100;
-				        CEBTypetemp = circuitElementButtonClicked;
+				        
 				        boolean changed = false;
 				        if (SwingUtilities.isRightMouseButton(e)) {
 				            //This will clear the graphic objects.
@@ -327,29 +327,35 @@ public class GUI {
 				            //int x = e.getX() - W/2;
 				            //int y = e.getY() - H/2;
 				    
-				      //no overlapping gates  	
+				      //no overlapping gates  
+				        	CEBTypetemp = circuitElementButtonClicked;
 				        	for (ImageCoordAndType temp : imageInfo) {
-				        		int clicklowx = e.getX()-50;
-				        		int clickhighx = e.getX()+50;
-				        		int clicklowy = e.getY()-25;
-				        		int clickhighy = e.getY()+25;
-				        		int lowy = temp.getUpperLeftImageY();
-				        		int lowx = temp.getUpperLeftImageX();
-				        		int highy=lowy+50;
-				        		int highx=lowx+100;
+				        		int clicklowx = e.getX()-70;
+				        		int clickhighx = e.getX()+70;
+				        		int clicklowy = e.getY()-35;
+				        		int clickhighy = e.getY()+35;
+				        		int lowy = temp.getUpperLeftImageY()-10;
+				        		int lowx = temp.getUpperLeftImageX()-20;
+				        		int highy=lowy+60;
+				        		int highx=lowx+120;
+				        		int bufferlowy = lowy-10;
+				        		int bufferlowx = lowx-20;
+				        		int bufferhighy= highy+10;
+				        		int bufferhighx= highx+20;
 				        	  
 				        		if ((((clicklowx<=highx) && (clicklowx>=lowx)) && ((clicklowy<=highy) && (clicklowy>=lowy)))) {
 				        			circuitElementButtonClicked = -1;
 				        		}
-				        		if ((((clicklowx<=highx) && (clicklowx>=lowx)) && ((clickhighy<=highy) && (clickhighy>=lowy)))) {
+				        		else if ((((clicklowx<=highx) && (clicklowx>=lowx)) && ((clickhighy<=highy) && (clickhighy>=lowy)))) {
 				        			circuitElementButtonClicked = -1;
 				        		}
-				        		if ((((clickhighx<=highx) && (clickhighx>=lowx)) && ((clicklowy<=highy) && (clicklowy>=lowy)))) {
+				        		else if ((((clickhighx<=highx) && (clickhighx>=lowx)) && ((clicklowy<=highy) && (clicklowy>=lowy)))) {
 				        			circuitElementButtonClicked = -1;
 				        		}
-				        		if ((((clickhighx<=highx) && (clickhighx>=lowx)) && ((clickhighy<=highy) && (clickhighy>=lowy)))) {
+				        		else if ((((clickhighx<=highx) && (clickhighx>=lowx)) && ((clickhighy<=highy) && (clickhighy>=lowy)))) {
 				        			circuitElementButtonClicked = -1;
 				        		}
+				        		
 				        	}
 				        	
 				        	
@@ -369,7 +375,7 @@ public class GUI {
 					            ImageCoordAndType imageCoordType = new ImageCoordAndType(circuitElementButtonClicked, x, y);
 					            imageInfo.add(imageCoordType);
 				            }
-				            
+				            circuitElementButtonClicked=CEBTypetemp;
 //				            Rectangle rect = new Rectangle(x, y, W, H);
 //				            circles.addElement(rect);
 //				            drawingPane.scrollRectToVisible(rect);
@@ -403,7 +409,7 @@ public class GUI {
 				    
 				    
 				}
-				circuitElementButtonClicked=CEBTypetemp;
+				
 				JComponent newContentPane = new ScrollDemo2();
 		        newContentPane.setOpaque(true); //content panes must be opaque
 		        frame.setContentPane(newContentPane);
