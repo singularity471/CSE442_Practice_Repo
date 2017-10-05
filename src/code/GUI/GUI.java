@@ -325,7 +325,36 @@ public class GUI {
 				        	
 				            //int x = e.getX() - W/2;
 				            //int y = e.getY() - H/2;
+				    
+				      //no overlapping gates  	
+				        	for (ImageCoordAndType temp : imageInfo) {
+				        		int clicklowx = e.getX()-50;
+				        		int clickhighx = e.getX()+50;
+				        		int clicklowy = e.getY()-25;
+				        		int clickhighy = e.getY()+25;
+				        		int lowy = temp.getUpperLeftImageY();
+				        		int lowx = temp.getUpperLeftImageX();
+				        		int highy=lowy+50;
+				        		int highx=lowx+100;
+				        		if ((((clicklowx<highx) && (clicklowx>lowx)) && ((clicklowy<highy) && (clicklowy>lowy)))) {
+				        			circuitElementButtonClicked = -1;
+				        		}
+				        		if ((((clicklowx<highx) && (clicklowx>lowx)) && ((clickhighy<highy) && (clickhighy>lowy)))) {
+				        			circuitElementButtonClicked = -1;
+				        		}
+				        		if ((((clickhighx<highx) && (clickhighx>lowx)) && ((clicklowy<highy) && (clicklowy>lowy)))) {
+				        			circuitElementButtonClicked = -1;
+				        		}
+				        		if ((((clickhighx<highx) && (clickhighx>lowx)) && ((clickhighy<highy) && (clickhighy>lowy)))) {
+				        			circuitElementButtonClicked = -1;
+				        		}
+				        	}
 				        	
+				        	
+				        	
+				        	
+				        	
+				      //end no overlap  	
 				            this.x = e.getX() - 50;
 				            this.y = e.getY() - 25;
 				            if (x < 0) x = 20;
