@@ -67,7 +67,7 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.tree.DefaultMutableTreeNode;
 
-
+import code.model.Model;
 
 import javax.swing.event.MouseInputAdapter;
 import java.io.IOException;
@@ -88,6 +88,12 @@ public class GUI {
 	private static final int OUTPUT_BUTTON = 8;
 	private int CEBTypetemp = -1;
 	private int circuitElementButtonClicked = INVALID;
+	
+	private Model model;
+	
+	public GUI(Model m) {
+		this.model = m;
+	}
 	
 	private JTree dirStructure;
 	public void run() {
@@ -127,7 +133,7 @@ public class GUI {
 				
 //#############################################################################
 // ScrollDemo2 from Oracle Tutorial Code begin
-				/* ScrollDemo2.java requires no other files. */
+				
 				class ScrollDemo2 extends JPanel
 				                         implements MouseListener {
 				    private Dimension area; //indicates area taken up by graphics
@@ -181,6 +187,8 @@ public class GUI {
 				    	private int upperLeftBufferX;
 				    	private int upperLeftBufferY;
 				    	
+				    	private String id;
+				    	
 				    	public ImageCoordAndType(int type, int upperLeftX, int upperLeftY) {
 				    		elementType = type;
 				    		upperLeftImageX = upperLeftX;
@@ -192,6 +200,9 @@ public class GUI {
 				    			
 				    	}
 				    	
+				    	String getID() {return id;}
+				    	void setID(String s) {id = s;}
+				   				    	
 				    	int getElementType() {return elementType;}
 						int getUpperLeftImageX() {return upperLeftImageX;}
 						int getUpperLeftImageY () {return upperLeftImageY;}
@@ -328,39 +339,57 @@ public class GUI {
 				            //int y = e.getY() - H/2;
 				    
 				      //no overlapping gates  
+				        	boolean b = false;
+				        	String id = "";
 				        	CEBTypetemp = circuitElementButtonClicked;
 				        	for (ImageCoordAndType temp : imageInfo) {
 				        		int clicklowx = e.getX()-50;
 				        		int clickhighx = e.getX()+50;
 				        		int clicklowy = e.getY()-25;
 				        		int clickhighy = e.getY()+25;
-				        		int lowy = temp.getUpperLeftImageY();
-				        		int lowx = temp.getUpperLeftImageX();
-				        		int highy=lowy+50;
-				        		int highx=lowx+100;
+				        		int lowy = temp.getUpperLeftImageY()-10;
+				        		int lowx = temp.getUpperLeftImageX()-20;
+				        		int highy=lowy+70;
+				        		int highx=lowx+140;
 				        		int bufferlowy = lowy-10;
 				        		int bufferlowx = lowx-20;
 				        		int bufferhighy= highy+10;
 				        		int bufferhighx= highx+20;
-				        	  
+				        		
+				        		
+				        		
 				        		if ((((clicklowx<=highx) && (clicklowx>=lowx)) && ((clicklowy<=highy) && (clicklowy>=lowy)))) {
-				        			circuitElementButtonClicked = -1;
+				        			circuitElementButtonClicked = INVALID;
+				        			id = temp.getID();
+				        			b = true;
+
+				  
 				        		}
 				        		if ((((clicklowx<=highx) && (clicklowx>=lowx)) && ((clickhighy<=highy) && (clickhighy>=lowy)))) {
-				        			circuitElementButtonClicked = -1;
+				        			circuitElementButtonClicked = INVALID;
+				        			id = temp.getID();
+				        			b = true;
+
 				        		}
 				        		if ((((clickhighx<=highx) && (clickhighx>=lowx)) && ((clicklowy<=highy) && (clicklowy>=lowy)))) {
-				        			circuitElementButtonClicked = -1;
+				        			circuitElementButtonClicked = INVALID;
+				        			id = temp.getID();
+				        			b = true;
+				        			
+				        			
 				        		}
 				        		if ((((clickhighx<=highx) && (clickhighx>=lowx)) && ((clickhighy<=highy) && (clickhighy>=lowy)))) {
-				        			circuitElementButtonClicked = -1;
+				        			circuitElementButtonClicked = INVALID;
+				        			id = temp.getID();
+				        			b = true;
+
 				        		}
 				        		
+				        		if(b) {System.out.println(id);}
+				        		b = false;
 				        	}
 				        	
-				        	
-				        	
-				        	
+
 				        	
 				      //end no overlap  	
 				            this.x = e.getX() - 50;
@@ -371,8 +400,10 @@ public class GUI {
 				            System.out.println(this.y);
 				            
 				            if(circuitElementButtonClicked!=INVALID) {
+				            	String newElementID = model.createandAddCircuitElement(circuitElementButtonClicked);
 					            circuitElementImages.add(elementImageTypes.get(circuitElementButtonClicked));
 					            ImageCoordAndType imageCoordType = new ImageCoordAndType(circuitElementButtonClicked, x, y);
+					            imageCoordType.setID(newElementID);
 					            imageInfo.add(imageCoordType);
 				            }
 				            circuitElementButtonClicked=CEBTypetemp;

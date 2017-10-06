@@ -2,6 +2,7 @@ package code.model;
 
 import java.util.ArrayList;
 import code.logicGates.*;
+import code.GUI.GUI;
 import code.IO.*;
 
 /**
@@ -21,11 +22,76 @@ public class Model {
 	private int outputNum = 0;
 	
 	private ArrayList<Object> workspaceElements = new ArrayList<Object>();
+	private GUI gui;
 	
 	
 	public ArrayList<Object> getWorkspaceElements(){return workspaceElements;}
 	
 	
+	
+	/*
+	 * int type: AND: 0
+	 *		 	 OR:  1
+	 *			 NOT: 2
+	 *			 XOR: 3
+	 *           NAND: 4
+	 *           NOR: 5
+	 *           XNOR: 6
+	 *           INPUT: 7
+	 *           OUTPUT: 8
+	 */
+	public String createandAddCircuitElement(int type) {
+		String id = "";
+		switch(type) {
+		case 0:
+			andGate and = new andGate();
+			id = addObjectToWorkspace(and);
+			System.out.println("Gate created: " + and.getID());
+			return id;
+		case 1:
+			orGate or = new orGate();
+			id = addObjectToWorkspace(or);
+			System.out.println("Gate created: " + or.getID());
+			return id;
+		case 2:
+			notGate not = new notGate();
+			id = addObjectToWorkspace(not);
+			System.out.println("Gate created: " + not.getID());
+			return id;
+		case 3:
+			xorGate xor = new xorGate();
+			id = addObjectToWorkspace(xor);
+			System.out.println("Gate created: " + xor.getID());
+			return id;
+		case 4:
+			nandGate nand = new nandGate();
+			id = addObjectToWorkspace(nand);
+			System.out.println("Gate created: " + nand.getID());
+			return id;
+		case 5:
+			norGate nor = new norGate();
+			id = addObjectToWorkspace(nor);
+			System.out.println("Gate created: " + nor.getID());
+			return id;
+		case 6:
+			xnorGate xnor = new xnorGate();
+			id = addObjectToWorkspace(xnor);
+			System.out.println("Gate created: " + xnor.getID());
+			return id;
+		case 7:
+			Input in = new Input();
+			id = addObjectToWorkspace(in);
+			System.out.println("Gate created: " + in.getID());
+			return id;
+		case 8:
+			Output out = new Output();
+			id = addObjectToWorkspace(out);
+			System.out.println("Gate created: " + out.getID());
+			return id;
+		}
+		
+		return id;
+	}
 	
 	/**
 	 * This method removes all connections from circuitElemeent element both existing in itself
@@ -500,130 +566,132 @@ public class Model {
 		return true;
 	}
 	
-	public void addObjectToWorkspace(Object obj) {
+	public String addObjectToWorkspace(Object obj) {
 		workspaceElements.add(obj);
+		String id = "";
 		if(obj instanceof andGate) {
 			andGate and = (andGate) obj;
-			String id = "and" + Integer.toString(andGateNum); 
+			id = "and" + Integer.toString(andGateNum); 
 			and.setID(id); 
 			andGateNum++;
 		}
 		if(obj instanceof orGate) {
 			orGate or = (orGate) obj;
-			String id = "or" + Integer.toString(orGateNum); 
+			id = "or" + Integer.toString(orGateNum); 
 			or.setID(id); 
 			orGateNum++;
 		}
 		if(obj instanceof notGate) {
 			notGate not = (notGate) obj;
-			String id = "not" + Integer.toString(notGateNum); 
+			id = "not" + Integer.toString(notGateNum); 
 			not.setID(id); 
 			notGateNum++;
 		}
 		if(obj instanceof norGate) {
 			norGate nor = (norGate) obj;
-			String id = "nor" + Integer.toString(norGateNum); 
+			id = "nor" + Integer.toString(norGateNum); 
 			nor.setID(id); 
 			norGateNum++;
 		}
 		if(obj instanceof nandGate) {
 			nandGate nand = (nandGate) obj;
-			String id = "nand" + Integer.toString(nandGateNum); 
+			id = "nand" + Integer.toString(nandGateNum); 
 			nand.setID(id); 
 			nandGateNum++;
 		}
 		if(obj instanceof xorGate) {
 			xorGate xor = (xorGate) obj;
-			String id = "xor" + Integer.toString(xorGateNum); 
+			id = "xor" + Integer.toString(xorGateNum); 
 			xor.setID(id); 
 			xorGateNum++;
 		}
 		if(obj instanceof xnorGate) {
 			xnorGate xnor = (xnorGate) obj;
-			String id = "xnor" + Integer.toString(xnorGateNum); 
+			id = "xnor" + Integer.toString(xnorGateNum); 
 			xnor.setID(id); 
 			xnorGateNum++;
 		}
 		if(obj instanceof Input) {
 			Input in = (Input) obj;
-			String id = "in" + Integer.toString(inputNum); 
+			id = "in" + Integer.toString(inputNum); 
 			in.setID(id); 
 			inputNum++;
 		}
 		if(obj instanceof Output) {
 			Output out = (Output) obj;
-			String id = "out" + Integer.toString(outputNum); 
+			id = "out" + Integer.toString(outputNum); 
 			out.setID(id); 
 			outputNum++;
 		}
+		return id;
 	}
 	
-	public void addObjectToWorkspace(String elementType) {
-		if(elementType.equals("and")) { 
-			andGate and = new andGate();
-			String id = "and" + Integer.toString(andGateNum);
-			and.setID(id);
-			andGateNum++;
-			workspaceElements.add(and);	
-		}
-		if(elementType.equals("or")) { 
-			orGate or = new orGate();
-			String id = "or" + Integer.toString(orGateNum);
-			or.setID(id);
-			orGateNum++; 
-			workspaceElements.add(or);
-		}
-		if(elementType.equals("xor")) { 
-			xorGate xor = new xorGate();
-			String id = "xor" + Integer.toString(xorGateNum);
-			xor.setID(id);
-			xorGateNum++; 
-			workspaceElements.add(xor);
-		}
-		if(elementType.equals("xnor")) { 
-			xnorGate xnor = new xnorGate();
-			String id = "xnor" + Integer.toString(xnorGateNum);
-			xnor.setID(id);
-			xnorGateNum++; 
-			workspaceElements.add(xnor);
-		}
-		if(elementType.equals("not")) { 
-			notGate not = new notGate();
-			String id = "not" + Integer.toString(notGateNum);
-			not.setID(id);
-			notGateNum++; 
-			workspaceElements.add(not);
-		}
-		if(elementType.equals("nor")) { 
-			norGate nor = new norGate();
-			String id = "nor" + Integer.toString(norGateNum);
-			nor.setID(id);
-			norGateNum++; 
-			workspaceElements.add(nor);
-		}
-		if(elementType.equals("nand")) { 
-			nandGate nand = new nandGate();
-			String id = "nand" + Integer.toString(nandGateNum);
-			nand.setID(id);
-			nandGateNum++; 
-			workspaceElements.add(nand);
-		}
-		if(elementType.equals("in")) { 
-			Input in = new Input();
-			String id = "in" + Integer.toString(inputNum);
-			in.setID(id);
-			inputNum++; 
-			workspaceElements.add(in);
-		}
-		if(elementType.equals("out")) { 
-			Output out = new Output();
-			String id = "out" + Integer.toString(outputNum);
-			out.setID(id);
-			outputNum++; 
-			workspaceElements.add(out);
-		}
-		
-	}
+//	public void addObjectToWorkspace(String elementType) {
+//		if(elementType.equals("and")) { 
+//			andGate and = new andGate();
+//			String id = "and" + Integer.toString(andGateNum);
+//			and.setID(id);
+//			andGateNum++;
+//			workspaceElements.add(and);	
+//		}
+//		if(elementType.equals("or")) { 
+//			orGate or = new orGate();
+//			String id = "or" + Integer.toString(orGateNum);
+//			or.setID(id);
+//			orGateNum++; 
+//			workspaceElements.add(or);
+//		}
+//		if(elementType.equals("xor")) { 
+//			xorGate xor = new xorGate();
+//			String id = "xor" + Integer.toString(xorGateNum);
+//			xor.setID(id);
+//			xorGateNum++; 
+//			workspaceElements.add(xor);
+//		}
+//		if(elementType.equals("xnor")) { 
+//			xnorGate xnor = new xnorGate();
+//			String id = "xnor" + Integer.toString(xnorGateNum);
+//			xnor.setID(id);
+//			xnorGateNum++; 
+//			workspaceElements.add(xnor);
+//		}
+//		if(elementType.equals("not")) { 
+//			notGate not = new notGate();
+//			String id = "not" + Integer.toString(notGateNum);
+//			not.setID(id);
+//			notGateNum++; 
+//			workspaceElements.add(not);
+//		}
+//		if(elementType.equals("nor")) { 
+//			norGate nor = new norGate();
+//			String id = "nor" + Integer.toString(norGateNum);
+//			nor.setID(id);
+//			norGateNum++; 
+//			workspaceElements.add(nor);
+//		}
+//		if(elementType.equals("nand")) { 
+//			nandGate nand = new nandGate();
+//			String id = "nand" + Integer.toString(nandGateNum);
+//			nand.setID(id);
+//			nandGateNum++; 
+//			workspaceElements.add(nand);
+//		}
+//		if(elementType.equals("in")) { 
+//			Input in = new Input();
+//			String id = "in" + Integer.toString(inputNum);
+//			in.setID(id);
+//			inputNum++; 
+//			workspaceElements.add(in);
+//		}
+//		if(elementType.equals("out")) { 
+//			Output out = new Output();
+//			String id = "out" + Integer.toString(outputNum);
+//			out.setID(id);
+//			outputNum++; 
+//			workspaceElements.add(out);
+//		}
+//		
+//	}
 	
 	public void printAllInputsAndValues() {
 		for(Object obj: workspaceElements) {
@@ -709,6 +777,37 @@ public class Model {
 			}
 			else if(obj instanceof Output) {
 				System.out.println(obj + " " + ((Output) obj).getID() + " " + ((Output) obj).getFamilyTree() );
+			}
+		}
+	}
+
+
+
+	public void setGUI(GUI gui) {
+		this.gui = gui;
+		
+	}
+
+
+
+	public void printElementMatching(String id) {
+		for(int i = 0; i < workspaceElements.size(); i++) {
+			Object obj = workspaceElements.get(0);
+			if(obj instanceof Gate) {
+				if(((Gate) obj).getID().equals(id)){
+					System.out.println(((Gate) obj).getID());
+				}
+			}
+			else if(obj instanceof Input) {
+				if(((Input) obj).getID().equals(id)){
+					System.out.println(((Input) obj).getID());
+				}
+				
+			}
+			else if(obj instanceof Output) {
+				if(((Output) obj).getID().equals(id)){
+					System.out.println(((Output) obj).getID());
+				}
 			}
 		}
 	}
