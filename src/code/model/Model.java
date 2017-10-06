@@ -29,6 +29,27 @@ public class Model {
 	
 	
 	
+	public void removeCircuitElementHelper(String id) {
+		for(int i = 0; i < workspaceElements.size(); ++i) {
+			Object obj = workspaceElements.get(i);
+			if(obj instanceof Gate) {
+				if(((Gate) obj).getID().equals(id)) {
+					this.removeCircuitElement(obj);
+				}
+			}
+			else if(obj instanceof Input) {
+				if(((Input) obj).getID().equals(id)) {
+					this.removeCircuitElement(obj);
+				}
+			}
+			else if(obj instanceof Output) {
+				if(((Output) obj).getID().equals(id)) {
+					this.removeCircuitElement(obj);
+				}
+			}
+		}
+	}
+	
 	/*
 	 * int type: AND: 0
 	 *		 	 OR:  1
@@ -833,6 +854,36 @@ public class Model {
 			}
 		}
 	}
+	
+	
+	public int toggleInputFromID(String InputID) {
+        Input Input1 = null;
+        int found=-1;
+        for(int i = 0; i < workspaceElements.size(); ++i) {
+            Object currentElement = workspaceElements.get(i);
+            if(currentElement instanceof Input) {
+                if(((Input) currentElement).getID().equals(InputID)) {
+                    Input1 =(Input) currentElement;
+                    if(Input1.getInputValue()==0) {
+                    Input1.setInputValue(1);
+                    found = 1;
+                    System.out.println("input set to 1");
+                    }
+                    else if(Input1.getInputValue()==1) {
+                    Input1.setInputValue(0);
+                    found = 0;
+                    System.out.println("input set to 0");
+                    
+                    }
+                    
+                    
+                }
+            }
+            
+        
+        }
+        return found;
+    }
 
 
 

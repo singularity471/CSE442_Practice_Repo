@@ -85,7 +85,9 @@ public class GUI {
 	private static final int NOR_BUTTON = 5;
 	private static final int XNOR_BUTTON = 6;
 	private static final int INPUT_BUTTON = 7;
-	private static final int OUTPUT_BUTTON = 8;
+	private static final int INPUT_LOGIC_0 = 7;
+	private static final int INPUT_LOGIC_1 = 8;
+	private static final int OUTPUT_BUTTON = 9;
 	private int CEBTypetemp = -1;
 	private int circuitElementButtonClicked = INVALID;
 	
@@ -95,6 +97,7 @@ public class GUI {
 	private static final int CONNECT_BUTTON = 2;
 	private static final int CANCEL_BUTTON = 3;
 	private static final int PARENT_SELECTED = 4;
+	private static final int TOGGLE_INPUT_BUTTON = 5;
 	
 	
 	private Model model;
@@ -174,7 +177,7 @@ public class GUI {
 				 
 				        //Set up the drawing area.
 				        drawingPane = new DrawingPane();
-				        drawingPane.setBackground(Color.black);
+				        drawingPane.setBackground(new Color(80,80,80));
 				        drawingPane.addMouseListener(this);
 				 
 				        //Put the drawing area in a scroll pane.
@@ -247,7 +250,7 @@ public class GUI {
 				    
 				    public void initializeImageContainer() {
 				    	Image img = null;
-				    	for(int i = 0; i < 9; ++i) {
+				    	for(int i = 0; i < 10; ++i) {
 				    		switch (i) {
 				    			case 0:
 				    				
@@ -309,8 +312,9 @@ public class GUI {
 				    	    		}
 				    				elementImageTypes.add(img);
 				        			break;
-				    			case 7:try {
-					    			img = ImageIO.read(getClass().getResource("images/input_color.png"));
+				    			case 7:
+				    				try {
+					    			img = ImageIO.read(getClass().getResource("images/input_0_color.png"));
 						    		} catch (IOException exp) {
 						    			exp.printStackTrace();
 						    		}
@@ -318,12 +322,21 @@ public class GUI {
 				        			break;
 				    			case 8:
 				    				try {
+					    			img = ImageIO.read(getClass().getResource("images/input_1_color.png"));
+						    		} catch (IOException exp) {
+						    			exp.printStackTrace();
+						    		}
+				    				elementImageTypes.add(img);
+				        			break;
+				    			case 9:
+				    				try {
 				    	    			img = ImageIO.read(getClass().getResource("images/output_color.png"));
 				    	    		} catch (IOException exp) {
 				    	    			exp.printStackTrace();
 				    	    		}
 				    				elementImageTypes.add(img);
 				        			break;
+				    			
 				    		}
 				    			
 				    	}
@@ -356,6 +369,43 @@ public class GUI {
 				        }
 				        
 				        else if(optionButtons == DELETE_BUTTON) {
+				        	
+				        	System.out.println("I am here 1");
+				        	boolean b = false;
+				        	String id = "";
+				        	for (ImageCoordAndType temp : imageInfo) {
+				        		
+				        		int lowy = temp.getUpperLeftImageY()-20+25;
+				        		int lowx = temp.getUpperLeftImageX()-33+50-12;
+				        		int highy = temp.getUpperLeftImageY()+20+25;
+				        		int highx = temp.getUpperLeftImageX()+33+50+12;
+				        		
+
+				        		if ((((e.getX()<=highx) && (e.getX()>=lowx)) && ((e.getY()<=highy) && (e.getY()>=lowy)))) {
+				        			System.out.println("I am here");
+				        			circuitElementButtonClicked = INVALID;
+				        			id = temp.getID();
+				        			b = true;
+				        			
+				        		}
+				        	}
+				        	
+				        	if(b) {
+				        		
+				        		System.out.println("Deleted object: " + id);
+				        		model.removeCircuitElementHelper(id);
+				        		int indexToSave = 0;
+				        		for(int i = 0; i < imageInfo.size(); ++i) {
+				        			if(imageInfo.get(i).getID().equals(id)) {
+				        				indexToSave = i;
+				        				imageInfo.remove(i);
+				        			}
+				        		}
+				        		circuitElementImages.remove(indexToSave);
+				        		optionButtons = INVALID;
+				        	}
+			        		b = false;
+				        	
 				        	
 				        }
 				        
@@ -391,6 +441,41 @@ public class GUI {
 				       
 				        	
 				        }
+				        
+			        	else if(optionButtons == TOGGLE_INPUT_BUTTON) {
+                        
+                        String id = "";
+                        for (int i = 0; i < imageInfo.size(); i++) {
+                            
+                        	ImageCoordAndType temp = imageInfo.get(i);
+                            int lowy = temp.getUpperLeftImageY()-10;
+                            int lowx = temp.getUpperLeftImageX()-20;
+                            int highy=lowy+70;
+                            int highx=lowx+140;
+                            
+                            if ((((e.getX()<=highx) && (e.getX()>=lowx)) && ((e.getY()<=highy) && (e.getY()>=lowy)))) {
+                                circuitElementButtonClicked = INVALID;
+                                id = temp.getID();
+                                int newLogicValue = model.toggleInputFromID(id);
+                                
+                                if(newLogicValue == 1) {
+                                	circuitElementImages.remove(i);
+                                	circuitElementImages.add(i, elementImageTypes.get(INPUT_LOGIC_1));
+                                }
+                                
+                                if(newLogicValue == 0) {
+                                	circuitElementImages.remove(i);
+                                	circuitElementImages.add(i, elementImageTypes.get(INPUT_LOGIC_0));
+                                }
+                                
+                                if(newLogicValue == 1 || newLogicValue == 0) {
+                                    System.out.println("Input " + id + " toggled");
+                                }
+                                else {System.out.println("Error, non input selected");}
+                                
+                            	}
+                        	}
+			        	}
 				        
 				        else if(optionButtons == PARENT_SELECTED) {
 				        	
@@ -497,8 +582,9 @@ public class GUI {
 					            ImageCoordAndType imageCoordType = new ImageCoordAndType(circuitElementButtonClicked, x, y);
 					            imageCoordType.setID(newElementID);
 					            imageInfo.add(imageCoordType);
+					            circuitElementButtonClicked = INVALID;
 				            }
-				            circuitElementButtonClicked=CEBTypetemp;
+				            
 //				            Rectangle rect = new Rectangle(x, y, W, H);
 //				            circles.addElement(rect);
 //				            drawingPane.scrollRectToVisible(rect);
@@ -762,6 +848,17 @@ public class GUI {
 			}
 		});
 		gates_and_io.add(button);
+		
+		
+		 button = new JButton("TOGGLE INPUT");
+	        button.addMouseListener(new MouseAdapter() {
+	            @Override
+	            public void mousePressed(MouseEvent e) {
+	                System.out.println("I clicked the TOGGLE Button");
+	                optionButtons = TOGGLE_INPUT_BUTTON;
+	            }
+	        });
+	    gates_and_io.add(button);
 		
 		button = new JButton("CANCEL");
 		button.addMouseListener(new MouseAdapter() {
