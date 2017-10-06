@@ -119,25 +119,6 @@ public class GUI {
 					e.printStackTrace();
 				}
 		
-		// gridSpaceLabel is the workspace for the user
-		
-				//JLabel gridSpaceLabel = new JLabel();
-		
-		// For the prototype we put an example circuit in the workspace
-		// to give the user an example of what he can create in the
-		// MVP.
-//		Image circuit_image;
-//		try {
-//			circuit_image = ImageIO.read(getClass().getResourceAsStream("images/sample_circuit2.png"));
-//			gridSpaceLabel.setIcon(new ImageIcon(circuit_image));
-//		} catch (IOException e1) {
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		}
-//		gridSpaceLabel.setHorizontalAlignment(SwingConstants.CENTER);
-//		gridSpaceLabel.setVerticalAlignment(SwingConstants.CENTER);
-//		
-//		JScrollPane gridPane = new JScrollPane(gridSpaceLabel);
 				
 				
 //#############################################################################
@@ -233,13 +214,7 @@ public class GUI {
 				            	g.drawImage(circuitElementImages.get(i), imageInfo.get(i).getUpperLeftImageX(), imageInfo.get(i).getUpperLeftImageY(), null);
 				            }
 				           
-				            	 
-//				            Rectangle rect;
-//				            for (int i = 0; i < circles.size(); i++) {
-//				                rect = circles.elementAt(i);
-//				                g.setColor(colors[(i % color_n)]);
-//				                g.fillOval(rect.x, rect.y, rect.width, rect.height);
-//				            }
+				            	
 				            
 				            
 				        }
@@ -729,6 +704,8 @@ public class GUI {
 		
 		//Add hover to tell user what the following buttons do:
 		button = new JButton("MOVE");
+		button.setToolTipText("<html> <font size=4> This button allows you to move an existing gate in the workspace<br> 1. "
+				+ "Click Move <br> 2. Click desired gate <br> 3. Click new location for gate.</font> </html>");
 		button.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
@@ -739,6 +716,8 @@ public class GUI {
 		gates_and_io.add(button);
 		
 		button = new JButton("DELETE");
+		button.setToolTipText("<html> <font size=4> This button allows you to delete an existing gate in the workspace<br> 1. "
+				+ "Click Delete <br> 2. Click desired gate</font> </html>");
 		button.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
@@ -749,6 +728,8 @@ public class GUI {
 		gates_and_io.add(button);
 		
 		button = new JButton("CONNECT");
+		button.setToolTipText("<html> <font size=4> This button allows you to connect two existing gates in the workspace<br> 1. "
+				+ "Click Move <br> 2. Click desired parent gate <br> 3. Click desired child gate.</font> </html>");
 		button.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
@@ -760,6 +741,7 @@ public class GUI {
 		gates_and_io.add(button);
 		
 		button = new JButton("CANCEL");
+		button.setToolTipText("<html> <font size=4> This button allows you to cancel any operation.</font> </html>");
 		button.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
@@ -773,6 +755,7 @@ public class GUI {
 		gates_and_io.add(button);
 		
 		button = new JButton("EVALUATE");
+		button.setToolTipText("<html> <font size=4> This button will evaluate all COMPLETE circuits in the workspace</font> </html>");
 		button.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
