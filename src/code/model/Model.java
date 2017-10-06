@@ -6,7 +6,7 @@ import code.GUI.GUI;
 import code.IO.*;
 
 /**
- * @author Ian
+ * @author Ian, Zack, Baqi
  *
  */
 public class Model {
@@ -104,7 +104,7 @@ public class Model {
 			id = addObjectToWorkspace(in);
 			System.out.println("Gate created: " + in.getID());
 			return id;
-		case 8:
+		case 9:
 			Output out = new Output();
 			id = addObjectToWorkspace(out);
 			System.out.println("Gate created: " + out.getID());
