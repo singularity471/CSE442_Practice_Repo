@@ -355,7 +355,7 @@ public class Model {
 		else if(child instanceof Gate) {
 			Gate childGate = (Gate) child;
 			inputNum = childGate.setInput(parent);
-			propagateFamilyTreeToAllChildren(childGate);
+			propagateFamilyTreeToAllChildren(childGate);  // problem here?
 			
 			if(inputNum == 0) {return false;}
 			else if(inputNum == 1) {
@@ -702,6 +702,17 @@ public class Model {
 		}
 	}
 	
+	public String allInputsAndValuesToString() {
+		String inputString = "";
+		for(Object obj: workspaceElements) {
+			if(obj.getClass() == Input.class) {
+				Input i = (Input) obj;
+				inputString = inputString + "<br> Input: " + i.getID() +  ", Value: " + Integer.toString(i.getInputValue());
+			}
+		}
+		return inputString;	
+	}
+	
 	public void printAllOutputsAndValues() {
 		for(Object obj: workspaceElements) {
 			if(obj.getClass() == Output.class) {
@@ -709,6 +720,17 @@ public class Model {
 				System.out.println("Output Identity:" + o + ", Name: " + o.getID() +  ", Value: " + o.getOutputValue());
 			}
 		}
+	}
+	
+	public String allOutputsAndValuesToString() {
+		String outputString = "";
+		for(Object obj: workspaceElements) {
+			if(obj.getClass() == Output.class) {
+				Output o = (Output) obj;
+				outputString = outputString + "<br> Output: " + o.getID() +  ", Value: " + Integer.toString(o.getOutputValue());
+			}
+		}
+		return outputString;	
 	}
 	
 	public void printAllInputAndOutputValuesForAllCircuitElements() {

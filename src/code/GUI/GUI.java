@@ -174,7 +174,7 @@ public class GUI {
 				 
 				        //Set up the drawing area.
 				        drawingPane = new DrawingPane();
-				        drawingPane.setBackground(Color.white);
+				        drawingPane.setBackground(Color.black);
 				        drawingPane.addMouseListener(this);
 				 
 				        //Put the drawing area in a scroll pane.
@@ -252,7 +252,7 @@ public class GUI {
 				    			case 0:
 				    				
 				    	            try {
-				    	    			img = ImageIO.read(getClass().getResource("images/and_with_text.png"));
+				    	    			img = ImageIO.read(getClass().getResource("images/and_color.png"));
 				    	    		} catch (IOException exp) {
 				    	    			exp.printStackTrace();
 				    	    		}
@@ -261,7 +261,7 @@ public class GUI {
 				    			case 1:
 				    				
 				    	            try {
-				    	    			img = ImageIO.read(getClass().getResource("images/or_with_text.png"));
+				    	    			img = ImageIO.read(getClass().getResource("images/or_color.png"));
 				    	    		} catch (IOException exp) {
 				    	    			exp.printStackTrace();
 				    	    		}
@@ -270,7 +270,7 @@ public class GUI {
 				    			case 2:
 				    				
 				    	            try {
-				    	    			img = ImageIO.read(getClass().getResource("images/not_with_text.png"));
+				    	    			img = ImageIO.read(getClass().getResource("images/not_color.png"));
 				    	    		} catch (IOException exp) {
 				    	    			exp.printStackTrace();
 				    	    		}
@@ -279,7 +279,7 @@ public class GUI {
 				    			case 3:
 				    				
 				    	            try {
-				    	    			img = ImageIO.read(getClass().getResource("images/xor_with_text.png"));
+				    	    			img = ImageIO.read(getClass().getResource("images/xor_color.png"));
 				    	    		} catch (IOException exp) {
 				    	    			exp.printStackTrace();
 				    	    		}
@@ -287,7 +287,7 @@ public class GUI {
 				        			break;
 				    			case 4:
 				    				try {
-				    	    			img = ImageIO.read(getClass().getResource("images/nand_with_text.png"));
+				    	    			img = ImageIO.read(getClass().getResource("images/nand_color.png"));
 				    	    		} catch (IOException exp) {
 				    	    			exp.printStackTrace();
 				    	    		}
@@ -295,7 +295,7 @@ public class GUI {
 				        			break;
 				    			case 5:
 				    				try {
-				    	    			img = ImageIO.read(getClass().getResource("images/nor_with_text.png"));
+				    	    			img = ImageIO.read(getClass().getResource("images/nor_color.png"));
 				    	    		} catch (IOException exp) {
 				    	    			exp.printStackTrace();
 				    	    		}
@@ -303,14 +303,14 @@ public class GUI {
 				        			break;
 				    			case 6:
 				    				try {
-				    	    			img = ImageIO.read(getClass().getResource("images/xnor_with_text.png"));
+				    	    			img = ImageIO.read(getClass().getResource("images/xnor_color.png"));
 				    	    		} catch (IOException exp) {
 				    	    			exp.printStackTrace();
 				    	    		}
 				    				elementImageTypes.add(img);
 				        			break;
 				    			case 7:try {
-					    			img = ImageIO.read(getClass().getResource("images/input.png"));
+					    			img = ImageIO.read(getClass().getResource("images/input_color.png"));
 						    		} catch (IOException exp) {
 						    			exp.printStackTrace();
 						    		}
@@ -318,7 +318,7 @@ public class GUI {
 				        			break;
 				    			case 8:
 				    				try {
-				    	    			img = ImageIO.read(getClass().getResource("images/output.png"));
+				    	    			img = ImageIO.read(getClass().getResource("images/output_color.png"));
 				    	    		} catch (IOException exp) {
 				    	    			exp.printStackTrace();
 				    	    		}
@@ -755,6 +755,10 @@ public class GUI {
 				System.out.println("I clicked the CONNECT Button");
 				optionButtons = CONNECT_BUTTON;
 				
+				//test
+				model.printAllFamilyTrees();
+				//end test
+				
 			}
 		});
 		gates_and_io.add(button);
@@ -778,7 +782,25 @@ public class GUI {
 			public void mousePressed(MouseEvent e) {
 				System.out.println("I clicked the EVALUATE Button");
 				model.evaluateCircuitNetwork();
+				
+				
+				JLabel inputOutputLabel = new JLabel();
+				inputOutputLabel.setHorizontalTextPosition(SwingConstants.CENTER);
+				inputOutputLabel.setVerticalTextPosition(SwingConstants.NORTH);
+				//abouttext.setPreferredSize(new Dimension(1300,768));
+				inputOutputLabel.setVerticalAlignment(SwingConstants.NORTH);
+				inputOutputLabel.setText("<html> <h3> <font color = 'blue'> Inputs & Outputs: </font></h3>" + model.allInputsAndValuesToString() + "<br>" + model.allOutputsAndValuesToString() + "</html>");
+
+				JScrollPane ioPane = new JScrollPane(inputOutputLabel);
+				JPanel ioPanel = new JPanel();
+				ioPanel.add(ioPane);
+				ioPane.getViewport().add(inputOutputLabel);
+				ioPane.setPreferredSize(new Dimension(400,300));
+				JOptionPane.showMessageDialog(null,ioPane, "Input/Output", 1, null);
+		
 			}
+			
+			
 		});
 		gates_and_io.add(button);
 		
