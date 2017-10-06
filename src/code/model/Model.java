@@ -811,6 +811,43 @@ public class Model {
 			}
 		}
 	}
+
+
+
+	public boolean makeConnectionFromIDs(String parentID, String childID) {
+		
+		Object parent = null;
+		Object child = null;
+		for(int i = 0; i < workspaceElements.size(); ++i) {
+			Object currentElement = workspaceElements.get(i);
+			if(currentElement instanceof Gate) {
+				if(((Gate) currentElement).getID().equals(parentID)) {
+					parent = currentElement;
+				}
+				if(((Gate) currentElement).getID().equals(childID)) {
+					child = currentElement;
+				}
+			}
+			else if(currentElement instanceof Input) {
+				if(((Input) currentElement).getID().equals(parentID)) {
+					parent = currentElement;
+				}
+				if(((Input) currentElement).getID().equals(childID)) {
+					child = currentElement;
+				}
+			}
+			else if(currentElement instanceof Output) {
+				if(((Output) currentElement).getID().equals(parentID)) {
+					parent = currentElement;
+				}
+				if(((Output) currentElement).getID().equals(childID)) {
+					child = currentElement;
+				}
+			}
+		}
+		return makeCircuitConnection(parent, child);
+		
+	}
 	
 	
 	

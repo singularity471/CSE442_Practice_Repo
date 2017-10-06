@@ -89,6 +89,14 @@ public class GUI {
 	private int CEBTypetemp = -1;
 	private int circuitElementButtonClicked = INVALID;
 	
+	private int optionButtons = INVALID;
+	private static final int MOVE_BUTTON = 0;
+	private static final int DELETE_BUTTON = 1;
+	private static final int CONNECT_BUTTON = 2;
+	private static final int CANCEL_BUTTON = 3;
+	private static final int PARENT_SELECTED = 4;
+	
+	
 	private Model model;
 	
 	public GUI(Model m) {
@@ -96,6 +104,7 @@ public class GUI {
 	}
 	
 	private JTree dirStructure;
+	public String parentID;
 	public void run() {
 		//Create JFrame
 		JFrame frame = new JFrame("LogiCAD");
@@ -339,9 +348,91 @@ public class GUI {
 				            //int y = e.getY() - H/2;
 				    
 				      //no overlapping gates  
+				        	
+				        	CEBTypetemp = circuitElementButtonClicked;
+				        
+				        if(optionButtons == MOVE_BUTTON) {
+				        	
+				        }
+				        
+				        else if(optionButtons == DELETE_BUTTON) {
+				        	
+				        }
+				        
+				        else if(optionButtons == CONNECT_BUTTON) {
+				        	
 				        	boolean b = false;
 				        	String id = "";
-				        	CEBTypetemp = circuitElementButtonClicked;
+				        	for (ImageCoordAndType temp : imageInfo) {
+				        		
+				        		int lowy = temp.getUpperLeftImageY()-10;
+				        		int lowx = temp.getUpperLeftImageX()-20;
+				        		int highy=lowy+70;
+				        		int highx=lowx+140;
+				        		
+
+				        		if ((((e.getX()<=highx) && (e.getX()>=lowx)) && ((e.getY()<=highy) && (e.getY()>=lowy)))) {
+				        			circuitElementButtonClicked = INVALID;
+				        			id = temp.getID();
+				        			b = true;
+				        			
+				        		}
+				        	}
+				        	
+				        	if(b) {
+				        		
+				        		System.out.println(id);
+				        		parentID = id;
+				        		optionButtons = PARENT_SELECTED;
+				        	}
+			        		b = false;
+			        		
+			        		
+				       
+				        	
+				        }
+				        
+				        else if(optionButtons == PARENT_SELECTED) {
+				        	
+				        	boolean b = false;
+				        	String id = "";
+				        	for (ImageCoordAndType temp : imageInfo) {
+				        		
+				        		int lowy = temp.getUpperLeftImageY()-10;
+				        		int lowx = temp.getUpperLeftImageX()-20;
+				        		int highy=lowy+70;
+				        		int highx=lowx+140;
+				        		
+
+				        		if ((((e.getX()<=highx) && (e.getX()>=lowx)) && ((e.getY()<=highy) && (e.getY()>=lowy)))) {
+				        			circuitElementButtonClicked = INVALID;
+				        			id = temp.getID();
+				        			b = true;
+				        			
+				        		}
+				        	}
+				        	
+				        	if(b) {
+				        		
+				        		System.out.println(id);
+				        		String childID = id;
+				        		boolean connectionSuccessful = model.makeConnectionFromIDs(parentID, childID);
+				        		if(connectionSuccessful) {
+				        			System.out.println("connection made between " + parentID + " and " + childID);
+				        			//model.printAllConnectionsForAllCircuitElements();
+				        		}
+				        		optionButtons = INVALID;
+				        		
+				        	}
+			        		b = false;
+			        		
+			        		
+				        	
+				        }
+				     	
+				        else { //General case
+				        	boolean b = false;
+				        	String id = "";
 				        	for (ImageCoordAndType temp : imageInfo) {
 				        		int clicklowx = e.getX()-50;
 				        		int clickhighx = e.getX()+50;
@@ -387,7 +478,8 @@ public class GUI {
 				        		
 				        		if(b) {System.out.println(id);}
 				        		b = false;
-				        	}
+				        	}//end for
+				        }//end else
 				        	
 
 				        	
@@ -634,6 +726,62 @@ public class GUI {
 			}
 		});
 		gates_and_io.add(button);
+		
+		//Add hover to tell user what the following buttons do:
+		button = new JButton("MOVE");
+		button.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				System.out.println("I clicked the MOVE Button");
+				optionButtons = MOVE_BUTTON;
+			}
+		});
+		gates_and_io.add(button);
+		
+		button = new JButton("DELETE");
+		button.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				System.out.println("I clicked the DELETE Button");
+				optionButtons = DELETE_BUTTON;
+			}
+		});
+		gates_and_io.add(button);
+		
+		button = new JButton("CONNECT");
+		button.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				System.out.println("I clicked the CONNECT Button");
+				optionButtons = CONNECT_BUTTON;
+				
+			}
+		});
+		gates_and_io.add(button);
+		
+		button = new JButton("CANCEL");
+		button.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				System.out.println("I clicked the CANCEL Button");
+				if(optionButtons == MOVE_BUTTON) {System.out.println("You set moveButtonClicked to: " + (optionButtons = INVALID));}
+				if(optionButtons == DELETE_BUTTON) {System.out.println("You set deleteButtonClicked to: " + (optionButtons = DELETE_BUTTON));}
+				if(optionButtons == CONNECT_BUTTON) {System.out.println("You set connectButtonClicked to: " + (optionButtons = CONNECT_BUTTON));}
+				if(circuitElementButtonClicked != INVALID) {System.out.println("You set circuitElementButtonClicked to: " + (circuitElementButtonClicked = INVALID));}
+			}
+		});
+		gates_and_io.add(button);
+		
+		button = new JButton("EVALUATE");
+		button.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				System.out.println("I clicked the EVALUATE Button");
+				model.evaluateCircuitNetwork();
+			}
+		});
+		gates_and_io.add(button);
+		
 	
 		frame.getContentPane().add(gates_and_io, BorderLayout.NORTH);
 		
