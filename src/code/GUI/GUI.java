@@ -88,6 +88,9 @@ public class GUI {
 	private static final int INPUT_LOGIC_0 = 7;
 	private static final int INPUT_LOGIC_1 = 8;
 	private static final int OUTPUT_BUTTON = 9;
+	private static final int OUTPUT_LOGIC_0 = 10;
+	private static final int OUTPUT_LOGIC_1 = 11;
+	
 	private int CEBTypetemp = -1;
 	private int circuitElementButtonClicked = INVALID;
 	
@@ -108,6 +111,7 @@ public class GUI {
 	
 	private JTree dirStructure;
 	public String parentID;
+	
 	public void run() {
 		//Create JFrame
 		JFrame frame = new JFrame("LogiCAD");
@@ -164,7 +168,15 @@ public class GUI {
 				        Color.red, Color.blue, Color.green, Color.orange,
 				        Color.cyan, Color.magenta, Color.darkGray, Color.yellow};
 				    private final int color_n = colors.length;
-				 
+				    
+				    public ArrayList<Image> getCircuitElementImages(){return circuitElementImages;}
+				    public ArrayList<Image> getElementImageTypes(){return elementImageTypes;}
+				    public ArrayList<ImageCoordAndType> getImageInfo(){return imageInfo;}
+				    
+				    public JPanel getDrawingPane() {return drawingPane;}
+				    
+				    
+
 				    public ScrollDemo2() {
 				        super(new BorderLayout());
 				        
@@ -250,7 +262,7 @@ public class GUI {
 				    
 				    public void initializeImageContainer() {
 				    	Image img = null;
-				    	for(int i = 0; i < 10; ++i) {
+				    	for(int i = 0; i < 12; ++i) {
 				    		switch (i) {
 				    			case 0:
 				    				
@@ -331,6 +343,22 @@ public class GUI {
 				    			case 9:
 				    				try {
 				    	    			img = ImageIO.read(getClass().getResource("images/output_color.png"));
+				    	    		} catch (IOException exp) {
+				    	    			exp.printStackTrace();
+				    	    		}
+				    				elementImageTypes.add(img);
+				        			break;
+				    			case 10:
+				    				try {
+				    	    			img = ImageIO.read(getClass().getResource("images/output_0_color.png"));
+				    	    		} catch (IOException exp) {
+				    	    			exp.printStackTrace();
+				    	    		}
+				    				elementImageTypes.add(img);
+				        			break;
+				    			case 11:
+				    				try {
+				    	    			img = ImageIO.read(getClass().getResource("images/output_1_color.png"));
 				    	    		} catch (IOException exp) {
 				    	    			exp.printStackTrace();
 				    	    		}
@@ -619,27 +647,16 @@ public class GUI {
 				    
 				}
 				
-				JComponent newContentPane = new ScrollDemo2();
+				/*
+				 * WE CHANGED:
+				 *  JComponent newContentPane = new ScrollDemo2(); to
+				 *  ScrollDemo2 newContentPane = new ScrollDemo2();
+				 */
+				ScrollDemo2 newContentPane = new ScrollDemo2();
 		        newContentPane.setOpaque(true); //content panes must be opaque
 		        frame.setContentPane(newContentPane);
-		         
-		         
-				 
-				    
-				 
-				   
-				
-
-
-				
-				
-				
-				
-				
-				
-				
-				
-				
+		        
+		     
 				
 				
 // ScrollDemo2 from Oracle Tutorial Code end
@@ -878,26 +895,45 @@ public class GUI {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				System.out.println("I clicked the EVALUATE Button");
-				model.evaluateCircuitNetwork();
+				boolean canWeEvaluate = model.evaluateCircuitNetwork();
 				
+				if(canWeEvaluate) {
+					
+					for(int i = 0; i < newContentPane.getImageInfo().size(); ++i) {
+						if(newContentPane.getImageInfo().get(i).getElementType() == 9) {
+							String id = newContentPane.getImageInfo().get(i).getID();
+							int outValue = model.getOutputValueFromID(id);
+							
+							if(outValue == 0) {
+								newContentPane.getCircuitElementImages().remove(i);
+								newContentPane.getCircuitElementImages().add(i, newContentPane.getElementImageTypes().get(10));
+								newContentPane.getDrawingPane().revalidate();
+								newContentPane.getDrawingPane().repaint();
+					        
+							}
+							
+							if(outValue == 1) {
+								newContentPane.getCircuitElementImages().remove(i);
+								newContentPane.getCircuitElementImages().add(i, newContentPane.getElementImageTypes().get(11));
+								newContentPane.getDrawingPane().revalidate();
+								newContentPane.getDrawingPane().repaint();
+							}
+						}
+					}
+				}
 				
-				JLabel inputOutputLabel = new JLabel();
-				inputOutputLabel.setHorizontalTextPosition(SwingConstants.CENTER);
-				inputOutputLabel.setVerticalTextPosition(SwingConstants.NORTH);
-				//abouttext.setPreferredSize(new Dimension(1300,768));
-				inputOutputLabel.setVerticalAlignment(SwingConstants.NORTH);
-				inputOutputLabel.setText("<html> <h3> <font color = 'blue'> Inputs & Outputs: </font></h3>" + model.allInputsAndValuesToString() + "<br>" + model.allOutputsAndValuesToString() + "</html>");
+				if(!canWeEvaluate) {
 
-				JScrollPane ioPane = new JScrollPane(inputOutputLabel);
-				JPanel ioPanel = new JPanel();
-				ioPanel.add(ioPane);
-				ioPane.getViewport().add(inputOutputLabel);
-				ioPane.setPreferredSize(new Dimension(400,300));
-				JOptionPane.showMessageDialog(null,ioPane, "Input/Output", 1, null);
+					JLabel errorDialog = new JLabel();
+					errorDialog.setHorizontalTextPosition(SwingConstants.CENTER);
+					errorDialog.setVerticalTextPosition(SwingConstants.NORTH);
+					errorDialog.setVerticalAlignment(SwingConstants.NORTH);
+					errorDialog.setText("The circuit has missing connections and cannot be evaluated! Please complete the circuit.");
+					JOptionPane.showMessageDialog(null,errorDialog, "Error!", 0, null);
+				}
 		
 			}
-			
-			
+
 		});
 		gates_and_io.add(button);
 		

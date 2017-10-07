@@ -30,6 +30,7 @@ public class Model {
 	
 	
 	public void removeCircuitElementHelper(String id) {
+		
 		for(int i = 0; i < workspaceElements.size(); ++i) {
 			Object obj = workspaceElements.get(i);
 			if(obj instanceof Gate) {
@@ -62,6 +63,7 @@ public class Model {
 	 *           OUTPUT: 8
 	 */
 	public String createandAddCircuitElement(int type) {
+		
 		String id = "";
 		switch(type) {
 		case 0:
@@ -146,6 +148,7 @@ public class Model {
 		if(element instanceof Gate) {
 			
 			Gate g = (Gate) element;
+			
 			
 			// Step 1 Gate
 			if(g.getInput1Source() != null) {
@@ -874,17 +877,26 @@ public class Model {
                     found = 0;
                     System.out.println("input set to 0");
                     
-                    }
-                    
-                    
+                    } 
                 }
             }
-            
-        
         }
         return found;
     }
 
+	public int getOutputValueFromID(String id) {
+		int outputVal = -2;
+		for(int i = 0; i < workspaceElements.size(); ++i) {
+			Object obj = workspaceElements.get(i);
+			if(obj instanceof Output) {
+				Output out = (Output) obj;
+				if(out.getID().equals(id)) {
+					outputVal = out.getOutputValue();
+				}
+			}
+		}
+		return outputVal;
+	}
 
 
 	public boolean makeConnectionFromIDs(String parentID, String childID) {
