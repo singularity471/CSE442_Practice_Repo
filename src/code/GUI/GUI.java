@@ -1262,7 +1262,37 @@ public class GUI {
 						"<br>" +
 						"<br>" +
 						"<br>" +
-						"<br>" +
+						"<br>" + 
+						"Some of the code used in this program has been adapted from an Oracle tutorial and"+
+						" file ScrollDemo2.java, for which the following Copyright and conditions apply: <br><br>"+
+						" Copyright (c) 1995, 2008, Oracle and/or its affiliates. All rights reserved.<br>" + 
+						" <br>" + 
+						" Redistribution and use in source and binary forms, with or without<br>" + 
+						" modification, are permitted provided that the following conditions<br>" + 
+						" are met:<br>" + 
+						" <br>" + 
+						"   - Redistributions of source code must retain the above copyright<br>" + 
+						"     notice, this list of conditions and the following disclaimer.<br>" + 
+						" <br>" + 
+						"   - Redistributions in binary form must reproduce the above copyright<br>" + 
+						"     notice, this list of conditions and the following disclaimer in the<br>" + 
+						"     documentation and/or other materials provided with the distribution.<br>" + 
+						" <br>" + 
+						"   - Neither the name of Oracle or the names of its<br>" + 
+						"     contributors may be used to endorse or promote products derived<br>" + 
+						"     from this software without specific prior written permission.<br>" + 
+						" <br>" + 
+						" THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS \"AS<br>" + 
+						" IS\" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,<br>" + 
+						" THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR<br>" + 
+						" PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR<br>" + 
+						" CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,<br>" + 
+						" EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,<br>" + 
+						" PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR<br>" + 
+						" PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF<br>" + 
+						" LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING<br>" + 
+						" NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS<br>" + 
+						" SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.<br>" + 
 						"<br>" );
 								
 					
