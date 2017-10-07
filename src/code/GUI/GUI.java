@@ -316,7 +316,7 @@ public class GUI {
 					    				xCoordChild-=45;
 					    				xCoordParent+=45;
 					    				int offset = parentLineOffsets.get(parentID);
-					    				offset *= 3;
+					    				offset *= 5;
 					    				Line2D line1 = new Line2D.Float(xCoordParent, yCoordParent, xCoordParent+offset, yCoordParent);
 					    				Line2D line2 = new Line2D.Float(xCoordParent+offset, yCoordParent, xCoordParent+offset, yCoordChild);
 					    				Line2D line3 = new Line2D.Float(xCoordParent+offset, yCoordChild, xCoordChild, yCoordChild);
@@ -329,7 +329,7 @@ public class GUI {
 					    				xCoordParent+=30;
 					    				
 					    				int offset = parentLineOffsets.get(parentID);
-					    				offset *= 3;
+					    				offset *= 5;
 					    				Line2D line1 = new Line2D.Float(xCoordParent, yCoordParent, xCoordParent+offset, yCoordParent);
 					    				Line2D line2 = new Line2D.Float(xCoordParent+offset, yCoordParent, xCoordParent+offset, yCoordChild);
 					    				Line2D line3 = new Line2D.Float(xCoordParent+offset, yCoordChild, xCoordChild, yCoordChild);
@@ -346,7 +346,7 @@ public class GUI {
 					    				xCoordParent+=45;
 					    				
 					    				int offset = parentLineOffsets.get(parentID);
-					    				offset *= 3;
+					    				offset *= 5;
 					    				Line2D line1 = new Line2D.Float(xCoordParent, yCoordParent, xCoordParent+offset, yCoordParent);
 					    				Line2D line2 = new Line2D.Float(xCoordParent+offset, yCoordParent, xCoordParent+offset, yCoordChild);
 					    				Line2D line3 = new Line2D.Float(xCoordParent+offset, yCoordChild, xCoordChild, yCoordChild);
@@ -359,7 +359,7 @@ public class GUI {
 					    				xCoordParent+=30;
 					    				
 					    				int offset = parentLineOffsets.get(parentID);
-					    				offset *= 3;
+					    				offset *= 5;
 					    				Line2D line1 = new Line2D.Float(xCoordParent, yCoordParent, xCoordParent+offset, yCoordParent);
 					    				Line2D line2 = new Line2D.Float(xCoordParent+offset, yCoordParent, xCoordParent+offset, yCoordChild);
 					    				Line2D line3 = new Line2D.Float(xCoordParent+offset, yCoordChild, xCoordChild, yCoordChild);
@@ -374,7 +374,7 @@ public class GUI {
 					    				xCoordParent+=45;
 					    				
 					    				int offset = parentLineOffsets.get(parentID);
-					    				offset *= 3;
+					    				offset *= 5;
 					    				Line2D line1 = new Line2D.Float(xCoordParent, yCoordParent, xCoordParent+offset, yCoordParent);
 					    				Line2D line2 = new Line2D.Float(xCoordParent+offset, yCoordParent, xCoordParent+offset, yCoordChild);
 					    				Line2D line3 = new Line2D.Float(xCoordParent+offset, yCoordChild, xCoordChild, yCoordChild);
@@ -386,7 +386,7 @@ public class GUI {
 					    				xCoordParent+=30;
 					    				
 					    				int offset = parentLineOffsets.get(parentID);
-					    				offset *= 3;
+					    				offset *= 5;
 					    				Line2D line1 = new Line2D.Float(xCoordParent, yCoordParent, xCoordParent+offset, yCoordParent);
 					    				Line2D line2 = new Line2D.Float(xCoordParent+offset, yCoordParent, xCoordParent+offset, yCoordChild);
 					    				Line2D line3 = new Line2D.Float(xCoordParent+offset, yCoordChild, xCoordChild, yCoordChild);
@@ -401,7 +401,7 @@ public class GUI {
 					    				xCoordParent+=45;
 					    				
 					    				int offset = parentLineOffsets.get(parentID);
-					    				offset *= 3;
+					    				offset *= 5;
 					    				Line2D line1 = new Line2D.Float(xCoordParent, yCoordParent, xCoordParent+offset, yCoordParent);
 					    				Line2D line2 = new Line2D.Float(xCoordParent+offset, yCoordParent, xCoordParent+offset, yCoordChild);
 					    				Line2D line3 = new Line2D.Float(xCoordParent+offset, yCoordChild, xCoordChild, yCoordChild);
@@ -412,7 +412,7 @@ public class GUI {
 					    				xCoordChild-=30;
 					    				xCoordParent+=30;
 					    				int offset = parentLineOffsets.get(parentID);
-					    				offset *= 3;
+					    				offset *= 5;
 					    				Line2D line1 = new Line2D.Float(xCoordParent, yCoordParent, xCoordParent+offset, yCoordParent);
 					    				Line2D line2 = new Line2D.Float(xCoordParent+offset, yCoordParent, xCoordParent+offset, yCoordChild);
 					    				Line2D line3 = new Line2D.Float(xCoordParent+offset, yCoordChild, xCoordChild, yCoordChild);
@@ -424,6 +424,7 @@ public class GUI {
 				            
 				            
 				            g2.setStroke(new BasicStroke(2));
+				            g2.setColor(Color.WHITE);
 				            for(Wire w: wires) {
 				            	g2.draw(w.getLine1());
 				            	g2.draw(w.getLine2());
@@ -549,8 +550,8 @@ public class GUI {
 				 
 				    //Handle mouse events.
 				    public void mouseReleased(MouseEvent e) {
-				        final int W = 100;
-				        final int H = 100;
+				        final int W = 300;
+				        final int H = 300;
 				        
 				        boolean changed = false;
 				        if (SwingUtilities.isRightMouseButton(e)) {
