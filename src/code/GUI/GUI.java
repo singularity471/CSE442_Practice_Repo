@@ -139,57 +139,26 @@ public class GUI {
 				}
 				
 				
-		
-		// gridSpaceLabel is the workspace for the user
-		
-				//JLabel gridSpaceLabel = new JLabel();
-		
-		// For the prototype we put an example circuit in the workspace
-		// to give the user an example of what he can create in the
-		// MVP.
-//		Image circuit_image;
-//		try {
-//			circuit_image = ImageIO.read(getClass().getResourceAsStream("images/sample_circuit2.png"));
-//			gridSpaceLabel.setIcon(new ImageIcon(circuit_image));
-//		} catch (IOException e1) {
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		}
-//		gridSpaceLabel.setHorizontalAlignment(SwingConstants.CENTER);
-//		gridSpaceLabel.setVerticalAlignment(SwingConstants.CENTER);
-//		
-//		JScrollPane gridPane = new JScrollPane(gridSpaceLabel);
 				
+//############################################################################################
+// Some of the following code is borrowed from ScrollDemo2.java, a file from an Oracle Tutorial
+// See Copyright at beginning the of GUI.java above.
+// Tutorial is at the following URL: https://docs.oracle.com/javase/tutorial/displayCode.html?code=https://docs.oracle.com/javase/tutorial/uiswing/examples/components/ScrollDemo2Project/src/components/ScrollDemo2.java
 				
-//#############################################################################
-// ScrollDemo2 from Oracle Tutorial Code begin
-				
-				class ScrollDemo2 extends JPanel
-				                         implements MouseListener {
-				    private Dimension area; //indicates area taken up by graphics
-				    //private Vector<Rectangle> circles; //coordinates used to draw graphics
+				class ScrollDemo2 extends JPanel implements MouseListener {
+				    
+					private Dimension area; //indicates area taken up by graphics
 				    private JPanel drawingPane;
 				    private int x;
 				    private int y;
 				    private ArrayList<Image> circuitElementImages = new ArrayList<Image>();
-//				    private ArrayList<Integer> x_vals = new ArrayList<Integer>();
-//				    private ArrayList<Integer> y_vals = new ArrayList<Integer>();
 				    private ArrayList<Image> elementImageTypes = new ArrayList<Image>();
-				    
 				    private ArrayList<ImageCoordAndType> imageInfo = new ArrayList<ImageCoordAndType>();
-				 
-				    private final Color colors[] = {
-				        Color.red, Color.blue, Color.green, Color.orange,
-				        Color.cyan, Color.magenta, Color.darkGray, Color.yellow};
-				    private final int color_n = colors.length;
-				    
 				    public ArrayList<Image> getCircuitElementImages(){return circuitElementImages;}
 				    public ArrayList<Image> getElementImageTypes(){return elementImageTypes;}
 				    public ArrayList<ImageCoordAndType> getImageInfo(){return imageInfo;}
-				    
 				    public JPanel getDrawingPane() {return drawingPane;}
-				    
-				    
+
 
 				    public ScrollDemo2() {
 				        super(new BorderLayout());
@@ -822,7 +791,7 @@ public class GUI {
 				    public void mousePressed(MouseEvent e){}
 				    
 				    
-				}
+				} // end class ScrollDemo2
 				
 				/*
 				 * WE CHANGED:
@@ -838,8 +807,10 @@ public class GUI {
 		     
 				
 				
-// ScrollDemo2 from Oracle Tutorial Code end
-//##############################################################################
+// Some of the preceding code is borrowed from ScrollDemo2.java, a file from an Oracle Tutorial
+// See Copyright at the beginning of GUI.java above
+// See URL above for original, non-altered ScrollDemo.java code		        
+//#############################################################################################
 
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -1324,83 +1295,7 @@ public class GUI {
 		//Make JFrame visible
 		frame.setVisible(true);
 			
-	}
+	} // end run method
 	
-//	public void buildWires(){
-//		
-//		ArrayList<Connection> connections = model.queryAndGetConnections();
-//		for(Connection con: connections) {
-//			String parentID = con.getParentID();
-//			String childID = con.getChildID();
-//			int inputType = con.getInputType();
-//			for(ImageCoordAndInfo imgData: newContentPane.)
-//		}
-//		
-//		(float xo,float yo)=outputgate.getlocation();
-//		(float xin,float yin,int whichinput)=inputgate.getlocation();
-//		public void paint(Graphics g) {
-//	        super.paint(g);  // fixes the immediate problem.
-//	        Graphics2D g2 = (Graphics2D) g;
-//			
-//	        // Input 1 of Gate
-//	        if (whichinput = 1){
-//				yin-=offsety;//alligns the line to the correct place based on gate location
-//				xin-=offsetx;
-//				xo+=offsetx;
-//				Line2D lin = new Line2D.Float(xo, xo+counter, yo, yo);
-//				Line2D lin2 = new Line2D.Float(xo+counter, xo+counter, yo, yin);
-//				Line2D lin3 = new Line2D.Float(xo+counter, xin, yin, yin);
-//				//add lin,lin2,lin3 to linked list.
-//				lins.add(lin);
-//				lins.add(lin2);
-//				lins.add(lin3);
-//				g2.draw(lin);
-//			}
-//			
-//			// Input 2 of Gate
-//			if (whichinput = 2){
-//				yin-=offsety;//alligns the line to the correct place based on gate location
-//				xin-=offsetx;
-//				xo+=offsetx;
-//				Line2D lin = new Line2D.Float(xo, xo+counter, yo, yo);
-//				Line2D lin2 = new Line2D.Float(xo+counter, xo+counter, yo, yin);
-//				Line2D lin3 = new Line2D.Float(xo+counter, xin, yin, yin);
-//				lins.add(lin);
-//				lins.add(lin2);
-//				lins.add(lin3);
-//				g2.draw(lin);
-//			}
-//			
-//			
-//			// Input 3 of Not
-//			if (whichinput = 3){
-//				xin-=offsetx;
-//				xo+=offsetx;
-//				Line2D lin = new Line2D.Float(xo, xo+counter, yo, yo);
-//				Line2D lin2 = new Line2D.Float(xo+counter, xo+counter, yo, yin);
-//				Line2D lin3 = new Line2D.Float(xo+counter, xin, yin, yin);
-//				lins.add(lin);
-//				lins.add(lin2);
-//				lins.add(lin3);
-//				g2.draw(lin);
-//			}
-//			
-//			
-//			// Output element
-//			if (whichinput = 4){
-//				Line2D lin = new Line2D.Float(xo, xo+counter, yo, yo);
-//				Line2D lin2 = new Line2D.Float(xo+counter, xo+counter, yo, yin);
-//				Line2D lin3 = new Line2D.Float(xo+counter, xin, yin, yin);
-//				lins.add(lin);
-//				lins.add(lin2);
-//				lins.add(lin3);
-//				g2.draw(lin);
-//			}
-//	    }
-//
-//
-//
-//	}
-	
-	
-}
+
+} // end class GUI 
