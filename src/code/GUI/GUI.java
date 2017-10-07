@@ -982,6 +982,7 @@ public class GUI {
 		
 		//Add hover to tell user what the following buttons do:
 		button = new JButton("MOVE");
+		button.setSize(new Dimension(50, 50));
 		button.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
@@ -1093,32 +1094,36 @@ public class GUI {
 		// End of JToolbar code
 		
 		
-		// Add side-bar
-		// Expandable List     
-		DefaultMutableTreeNode falsetop = new DefaultMutableTreeNode("");
-		DefaultMutableTreeNode top = new DefaultMutableTreeNode("Project1");
-		DefaultMutableTreeNode child = new DefaultMutableTreeNode("Example Circuit One");
-		DefaultMutableTreeNode child2 = new DefaultMutableTreeNode("32bit ALU");
-		DefaultMutableTreeNode child3 = new DefaultMutableTreeNode("Carry Look Ahead Adder");
-		DefaultMutableTreeNode top2 = new DefaultMutableTreeNode("32bit CPU");
-		falsetop.add(top);
-		falsetop.add(top2);
-		top.add(child);
-		top2.add(child2);
-		top2.add(child3);
-		dirStructure = new JTree(falsetop);
-		dirStructure.setRootVisible(false);
-		JScrollPane treeView = new JScrollPane(dirStructure);
-		treeView.setPreferredSize(new Dimension(200,768));
-		dirStructure.expandRow(1);
-		dirStructure.expandRow(2);
-				
-				         
-				
-		frame.getContentPane().add(treeView, BorderLayout.WEST);
+		// SIDE-BAR CODE COMMENTED OUT BELOW -- WILL ADD AGAIN IN FUTURE BY UNCOMMENTING
+		// DO NOT REMOVE COMMENTED OUT CODE BELOW
 		
-		// Add gridPane to JFrame -- gridPane holds the JLabel gridSpaceLabel
-		//frame.getContentPane().add(gridPane, BorderLayout.CENTER);
+//		// Add side-bar
+//		// Expandable List     
+//		DefaultMutableTreeNode falsetop = new DefaultMutableTreeNode("");
+//		DefaultMutableTreeNode top = new DefaultMutableTreeNode("Project1");
+//		DefaultMutableTreeNode child = new DefaultMutableTreeNode("Example Circuit One");
+//		DefaultMutableTreeNode child2 = new DefaultMutableTreeNode("32bit ALU");
+//		DefaultMutableTreeNode child3 = new DefaultMutableTreeNode("Carry Look Ahead Adder");
+//		DefaultMutableTreeNode top2 = new DefaultMutableTreeNode("32bit CPU");
+//		falsetop.add(top);
+//		falsetop.add(top2);
+//		top.add(child);
+//		top2.add(child2);
+//		top2.add(child3);
+//		dirStructure = new JTree(falsetop);
+//		dirStructure.setRootVisible(false);
+//		JScrollPane treeView = new JScrollPane(dirStructure);
+//		treeView.setPreferredSize(new Dimension(200,768));
+//		dirStructure.expandRow(1);
+//		dirStructure.expandRow(2);
+//				
+//				         
+//				
+//		frame.getContentPane().add(treeView, BorderLayout.WEST);
+		
+		// DO NOT REMOVE COMMENTED OUT CODE ABOVE
+		
+		
 		
 		frame.getContentPane().setBackground(Color.GRAY);
 		
@@ -1129,49 +1134,55 @@ public class GUI {
 
 		//Create the Main Menu Bar
 		menuBar = new JMenuBar();
+		
+		// NON-WORKING MENU ITEMS -- WILL BE UNCOMMENTED FOR FUTURE USE
+		// DO NOT REMOVE THIS COMMENTED OUT CODE BELOW
 
-		//Create File Menu
-		menu = new JMenu("File");
-		menu.setMnemonic(KeyEvent.VK_F);
-		menu.getAccessibleContext().setAccessibleDescription(
-		        "File Menu");
+//		//Create File Menu
+//		menu = new JMenu("File");
+//		menu.setMnemonic(KeyEvent.VK_F);
+//		menu.getAccessibleContext().setAccessibleDescription(
+//		        "File Menu");
+//		
+//		//Add menu items to File Menu
+//		menuItem = new JMenuItem("Save");
+//		menu.add(menuItem);
+//		menuItem = new JMenuItem("Load");
+//		menu.add(menuItem);
+//		menuItem = new JMenuItem("Import Module");
+//		menu.add(menuItem);
+//		menuItem = new JMenuItem("Export Module");
+//		menu.add(menuItem);
+//		menuItem = new JMenuItem("Set Project Directory");
+//		menu.add(menuItem);
+//		
+//		//Add File Menu to Main Menu
+//		menuBar.add(menu);
+//		
+//		//Create Edit Menu
+//		menu = new JMenu("Edit");
+//		menu.setMnemonic(KeyEvent.VK_E);
+//		menu.getAccessibleContext().setAccessibleDescription(
+//		        "Edit Menu");
+//		
+//		menuItem = new JMenuItem("Options");
+//		menu.add(menuItem);
+//		
+//		menuBar.add(menu);
+//		
+//		//Create View Menu
+//		menu = new JMenu("View");
+//		menu.setMnemonic(KeyEvent.VK_V);
+//		menu.getAccessibleContext().setAccessibleDescription(
+//		        "View Menu");
+//		
+//		menuItem = new JMenuItem("Toggle Side-Bar");
+//		menu.add(menuItem);
+//		
+//		menuBar.add(menu);
 		
-		//Add menu items to File Menu
-		menuItem = new JMenuItem("Save");
-		menu.add(menuItem);
-		menuItem = new JMenuItem("Load");
-		menu.add(menuItem);
-		menuItem = new JMenuItem("Import Module");
-		menu.add(menuItem);
-		menuItem = new JMenuItem("Export Module");
-		menu.add(menuItem);
-		menuItem = new JMenuItem("Set Project Directory");
-		menu.add(menuItem);
-		
-		//Add File Menu to Main Menu
-		menuBar.add(menu);
-		
-		//Create Edit Menu
-		menu = new JMenu("Edit");
-		menu.setMnemonic(KeyEvent.VK_E);
-		menu.getAccessibleContext().setAccessibleDescription(
-		        "Edit Menu");
-		
-		menuItem = new JMenuItem("Options");
-		menu.add(menuItem);
-		
-		menuBar.add(menu);
-		
-		//Create View Menu
-		menu = new JMenu("View");
-		menu.setMnemonic(KeyEvent.VK_V);
-		menu.getAccessibleContext().setAccessibleDescription(
-		        "View Menu");
-		
-		menuItem = new JMenuItem("Toggle Side-Bar");
-		menu.add(menuItem);
-		
-		menuBar.add(menu);
+		// NON-WORKING MENU ITEMS -- WILL BE UNCOMMENTED FOR FUTURE USE
+		// DO NOT REMOVE THIS COMMENTED OUT CODE ABOVE
 		
 		//Create Help Menu
 		menu = new JMenu("Help");
