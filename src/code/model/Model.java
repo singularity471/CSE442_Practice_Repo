@@ -29,6 +29,8 @@ public class Model {
 	
 	
 	
+	
+	
 	public void removeCircuitElementHelper(String id) {
 		
 		for(int i = 0; i < workspaceElements.size(); ++i) {
@@ -366,10 +368,12 @@ public class Model {
 				if(parent instanceof Gate) {
 					Gate g = (Gate) parent;
 					g.setChild_Inputs1(child); // add child as an output
+					//gui.connectIO(g.getID(), out.getID(), 4);
 				}
 				else if(parent.getClass() == Input.class){
 					Input i = (Input) parent;
 					i.addChild_Input1(child);
+					//gui.connectIO(i.getID(), out.getID(), 4);
 				}
 			}
 			
@@ -386,20 +390,24 @@ public class Model {
 				if(parent instanceof Gate) {
 					Gate g = (Gate) parent;
 					g.setChild_Inputs1(child); // add child as an output
+					//gui.connectIO(g.getID(), childGate.getID(), 1);
 				}
 				else if(parent.getClass() == Input.class){
 					Input i = (Input) parent;
 					i.addChild_Input1(child);
+					//gui.connectIO(i.getID(), childGate.getID(), 1);
 				}
 			}
 			else if(inputNum == 2) {
 				if(parent instanceof Gate) {
 					Gate g = (Gate) parent;
 					g.setChild_Inputs2(child); // add child as an output
+					//gui.connectIO(g.getID(), childGate.getID(), 2);
 				}
 				else if(parent.getClass() == Input.class){
 					Input i = (Input) parent;
 					i.addChild_Input2(child);
+					//gui.connectIO(i.getID(), childGate.getID(), 2);
 				}
 			}
 			
@@ -407,10 +415,12 @@ public class Model {
 				if(parent instanceof Gate) {
 					Gate g = (Gate) parent;
 					g.setChild_Inputs1(child); // add child as an output
+					//gui.connectIO(g.getID(), childGate.getID(), 3);
 				}
 				else if(parent.getClass() == Input.class){
 					Input i = (Input) parent;
 					i.addChild_Input1(child);
+					//gui.connectIO(i.getID(), childGate.getID(), 3);
 				}
 			}
 		}
@@ -803,6 +813,110 @@ public class Model {
 		}
 		
 	}
+	
+	
+	public ArrayList<Connection> queryAndGetConnections() {
+		
+		ArrayList<Connection> connections = new ArrayList<Connection>();
+		for(int i = 0; i < workspaceElements.size(); ++i) {
+			Object parent = workspaceElements.get(i);
+			
+			// Parent is Input
+			if(parent instanceof Input) {
+				ArrayList<Object> children1Inputs = ((Input) parent).getInput1Children();
+				for(int j = 0; j < children1Inputs.size(); ++j) {
+					if(children1Inputs.get(j) instanceof Gate) {
+						String parentID = ((Input) parent).getID();
+						String childID = ((Gate) children1Inputs.get(j)).getID();
+						int inputType = 1;
+						if(children1Inputs.get(j) instanceof notGate) {
+							inputType = 3;
+						}
+						Connection newCon = new Connection(parentID, childID, inputType);
+						connections.add(newCon);
+					}
+					else if(children1Inputs.get(j) instanceof Output) {
+						String parentID = ((Input) parent).getID();
+						String childID = ((Output) children1Inputs.get(j)).getID();
+						int inputType = 4;
+						Connection newCon = new Connection(parentID, childID, inputType);
+						connections.add(newCon);
+					}
+				}
+				
+				ArrayList<Object> children2Inputs = ((Input) parent).getInput2Children();
+				for(int j = 0; j < children2Inputs.size(); ++j) {
+					if(children2Inputs.get(j) instanceof Gate) {
+						String parentID = ((Input) parent).getID();
+						String childID = ((Gate) children2Inputs.get(j)).getID();
+						int inputType = 2;
+						if(children2Inputs.get(j) instanceof notGate) {
+							inputType = 3;
+						}
+						Connection newCon = new Connection(parentID, childID, inputType);
+						connections.add(newCon);
+					}
+					else if(children2Inputs.get(j) instanceof Output) {
+						String parentID = ((Input) parent).getID();
+						String childID = ((Output) children2Inputs.get(j)).getID();
+						int inputType = 4;
+						Connection newCon = new Connection(parentID, childID, inputType);
+						connections.add(newCon);
+					}
+				}
+				
+				
+			}
+			
+			// Parent is Gate
+			if(parent instanceof Gate) {
+				ArrayList<Object> children1Inputs = ((Gate) parent).getChildren_Inputs1();
+				for(int j = 0; j < children1Inputs.size(); ++j) {
+					if(children1Inputs.get(j) instanceof Gate) {
+						String parentID = ((Gate) parent).getID();
+						String childID = ((Gate) children1Inputs.get(j)).getID();
+						int inputType = 1;
+						if(children1Inputs.get(j) instanceof notGate) {
+							inputType = 3;
+						}
+						Connection newCon = new Connection(parentID, childID, inputType);
+						connections.add(newCon);
+					}
+					else if(children1Inputs.get(j) instanceof Output) {
+						String parentID = ((Gate) parent).getID();
+						String childID = ((Output) children1Inputs.get(j)).getID();
+						int inputType = 4;
+						Connection newCon = new Connection(parentID, childID, inputType);
+						connections.add(newCon);
+					}
+				}
+				
+				ArrayList<Object> children2Inputs = ((Gate) parent).getChildren_Inputs2();
+				for(int j = 0; j < children2Inputs.size(); ++j) {
+					if(children2Inputs.get(j) instanceof Gate) {
+						String parentID = ((Gate) parent).getID();
+						String childID = ((Gate) children2Inputs.get(j)).getID();
+						int inputType = 2;
+						if(children2Inputs.get(j) instanceof notGate) {
+							inputType = 3;
+						}
+						Connection newCon = new Connection(parentID, childID, inputType);
+						connections.add(newCon);
+					}
+					else if(children2Inputs.get(j) instanceof Output) {
+						String parentID = ((Gate) parent).getID();
+						String childID = ((Output) children2Inputs.get(j)).getID();
+						int inputType = 4;
+						Connection newCon = new Connection(parentID, childID, inputType);
+						connections.add(newCon);
+					}
+				}
+
+			}
+		}//end outer for
+		
+		return connections;
+	} //end method
 	
 	public void printAllWorkspaceElements() {
 		for(Object obj: workspaceElements) {

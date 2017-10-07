@@ -1,4 +1,5 @@
 package tests;
+import code.model.Connection;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
@@ -473,18 +474,32 @@ public class tests_for_model {
 			orGate or0 = new orGate();
 			Input in0 = new Input();
 			Output out0 = new Output();
+			notGate not0 = new notGate();
 			
 			m.addObjectToWorkspace(and0);
 			m.addObjectToWorkspace(xor0);
 			m.addObjectToWorkspace(or0);
 			m.addObjectToWorkspace(in0);
 			m.addObjectToWorkspace(out0);
+			m.addObjectToWorkspace(not0);
 			
 			m.makeCircuitConnection(in0, and0);
 			m.makeCircuitConnection(and0, out0);
 			m.makeCircuitConnection(or0, and0);
 			m.makeCircuitConnection(and0, xor0);
 			m.makeCircuitConnection(or0, xor0);
+			m.makeCircuitConnection(in0, not0);
+			
+			System.out.println();
+			System.out.println();
+			System.out.println();
+			ArrayList<Connection> connections = m.queryAndGetConnections();
+			for(Connection con: connections) {
+				System.out.println("Connection from: " + con.getParentID() + " to " + con.getChildID() + " & Input Type: " + con.getInputType() + "\n");
+			}
+			System.out.println();
+			System.out.println();
+			System.out.println();
 
 			m.printAllWorkspaceElements();
 			

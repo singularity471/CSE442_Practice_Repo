@@ -36,18 +36,23 @@
 package code.GUI;
 
 
+import java.awt.BasicStroke;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.geom.Line2D;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -67,6 +72,7 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.tree.DefaultMutableTreeNode;
 
+import code.model.Connection;
 import code.model.Model;
 
 import javax.swing.event.MouseInputAdapter;
@@ -102,6 +108,12 @@ public class GUI {
 	private static final int PARENT_SELECTED = 4;
 	private static final int TOGGLE_INPUT_BUTTON = 5;
 	
+//	private JComponent contentPane;
+	
+
+	
+	private HashMap<String, Integer> parentLineOffsets = new HashMap<String, Integer>();
+	private ArrayList<Wire> wires = new ArrayList<Wire>();
 	
 	private Model model;
 	
@@ -125,6 +137,8 @@ public class GUI {
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
+				
+				
 		
 		// gridSpaceLabel is the workspace for the user
 		
@@ -241,25 +255,187 @@ public class GUI {
 				 
 				    /** The component inside the scroll pane. */
 				    class DrawingPane extends JPanel {
-				        protected void paintComponent(Graphics g) {
-				            super.paintComponent(g);
+				        
+				    	protected void paintComponent(Graphics g) {
 				            
+				    		
+				    		Graphics2D g2 = (Graphics2D) g;
+				    		g2.clearRect(0, 0, this.getWidth(), this.getHeight());
+				    		
+				    		
+				    		super.paintComponent(g);
+
 				            for(int i = 0; i < circuitElementImages.size(); ++i) {
 				            	g.drawImage(circuitElementImages.get(i), imageInfo.get(i).getUpperLeftImageX(), imageInfo.get(i).getUpperLeftImageY(), null);
 				            }
+				            
+				            System.out.println(model.queryAndGetConnections());
+				            
+				            ArrayList<Connection> connections = model.queryAndGetConnections();
+				    		
+				            System.out.println(connections);
+				            System.out.println(model.queryAndGetConnections());
+				            
+				            wires.clear();
+				            parentLineOffsets.clear();
+				            
+				            for(Connection con: connections) {
+				    			String parentID = con.getParentID();
+				    			if(parentLineOffsets.get(parentID) == null) {
+				    				parentLineOffsets.put(parentID, 0);
+				    			}
+				    			else {
+				    				parentLineOffsets.put(parentID, parentLineOffsets.get(parentID) + 1);
+				    			}
+				    			String childID = con.getChildID();
+				    			int inputType = con.getInputType();
+				    			int parentType = -2;
+				    			int xCoordParent = -1;
+				    			int yCoordParent = -1;
+				    			int xCoordChild = -1;
+				    			int yCoordChild = -1;
+				    			for(ImageCoordAndType imgData: imageInfo) {
+				    				if(parentID.equals(imgData.getID())) {
+				    					parentType = imgData.getElementType();
+				    					xCoordParent = imgData.getCenterImageX();
+				    					yCoordParent = imgData.getCenterImageY();
+				    				}
+				    			}
+				    			
+				    			for(ImageCoordAndType imgData: imageInfo) {
+				    				if(childID.equals(imgData.getID())) {
+				    					xCoordChild = imgData.getCenterImageX();
+				    					yCoordChild = imgData.getCenterImageY();
+				    				}
+				    			}
+				    			
+				    			if(inputType == 1) {
+				    				// parent is Gate
+				    				if(parentType >= 0 && parentType <= 6) {
+				    					yCoordChild-=10;//alligns the line to the correct place based on gate location
+					    				xCoordChild-=45;
+					    				xCoordParent+=45;
+					    				int offset = parentLineOffsets.get(parentID);
+					    				offset *= 3;
+					    				Line2D line1 = new Line2D.Float(xCoordParent, yCoordParent, xCoordParent+offset, yCoordParent);
+					    				Line2D line2 = new Line2D.Float(xCoordParent+offset, yCoordParent, xCoordParent+offset, yCoordChild);
+					    				Line2D line3 = new Line2D.Float(xCoordParent+offset, yCoordChild, xCoordChild, yCoordChild);
+					    				wires.add(new Wire(line1, line2, line3));
+				    				}
+				    				// parent is Input
+				    				else if(parentType == 7) {
+				    					yCoordChild-=10;//alligns the line to the correct place based on gate location
+					    				xCoordChild-=45;
+					    				xCoordParent+=30;
+					    				
+					    				int offset = parentLineOffsets.get(parentID);
+					    				offset *= 3;
+					    				Line2D line1 = new Line2D.Float(xCoordParent, yCoordParent, xCoordParent+offset, yCoordParent);
+					    				Line2D line2 = new Line2D.Float(xCoordParent+offset, yCoordParent, xCoordParent+offset, yCoordChild);
+					    				Line2D line3 = new Line2D.Float(xCoordParent+offset, yCoordChild, xCoordChild, yCoordChild);
+					    				wires.add(new Wire(line1, line2, line3));
+				    				}	
+				    				
+				    			}//end if inputType == 1
+				    			
+				    			if(inputType == 2) {
+				    				// parent is Gate
+				    				if(parentType >= 0 && parentType <= 6) {
+				    					yCoordChild+=10;//alligns the line to the correct place based on gate location
+					    				xCoordChild-=45;
+					    				xCoordParent+=45;
+					    				
+					    				int offset = parentLineOffsets.get(parentID);
+					    				offset *= 3;
+					    				Line2D line1 = new Line2D.Float(xCoordParent, yCoordParent, xCoordParent+offset, yCoordParent);
+					    				Line2D line2 = new Line2D.Float(xCoordParent+offset, yCoordParent, xCoordParent+offset, yCoordChild);
+					    				Line2D line3 = new Line2D.Float(xCoordParent+offset, yCoordChild, xCoordChild, yCoordChild);
+					    				wires.add(new Wire(line1, line2, line3));
+				    				}
+				    				// parent is Input
+				    				else if(parentType == 7) {
+				    					yCoordChild+=10;//alligns the line to the correct place based on gate location
+					    				xCoordChild-=45;
+					    				xCoordParent+=30;
+					    				
+					    				int offset = parentLineOffsets.get(parentID);
+					    				offset *= 3;
+					    				Line2D line1 = new Line2D.Float(xCoordParent, yCoordParent, xCoordParent+offset, yCoordParent);
+					    				Line2D line2 = new Line2D.Float(xCoordParent+offset, yCoordParent, xCoordParent+offset, yCoordChild);
+					    				Line2D line3 = new Line2D.Float(xCoordParent+offset, yCoordChild, xCoordChild, yCoordChild);
+					    				wires.add(new Wire(line1, line2, line3));
+				    				}	
+				    			}
+				    			
+				    			if(inputType == 3) {
+				    				// parent is Gate
+				    				if(parentType >= 0 && parentType <= 6) {
+					    				xCoordChild-=45;
+					    				xCoordParent+=45;
+					    				
+					    				int offset = parentLineOffsets.get(parentID);
+					    				offset *= 3;
+					    				Line2D line1 = new Line2D.Float(xCoordParent, yCoordParent, xCoordParent+offset, yCoordParent);
+					    				Line2D line2 = new Line2D.Float(xCoordParent+offset, yCoordParent, xCoordParent+offset, yCoordChild);
+					    				Line2D line3 = new Line2D.Float(xCoordParent+offset, yCoordChild, xCoordChild, yCoordChild);
+					    				wires.add(new Wire(line1, line2, line3));
+				    				}
+				    				// parent is Input
+				    				else if(parentType == 7) {
+					    				xCoordChild-=45;
+					    				xCoordParent+=30;
+					    				
+					    				int offset = parentLineOffsets.get(parentID);
+					    				offset *= 3;
+					    				Line2D line1 = new Line2D.Float(xCoordParent, yCoordParent, xCoordParent+offset, yCoordParent);
+					    				Line2D line2 = new Line2D.Float(xCoordParent+offset, yCoordParent, xCoordParent+offset, yCoordChild);
+					    				Line2D line3 = new Line2D.Float(xCoordParent+offset, yCoordChild, xCoordChild, yCoordChild);
+					    				wires.add(new Wire(line1, line2, line3));
+				    				}	
+				    			}
+				    			
+				    			if(inputType == 4) {
+				    				// parent is Gate
+				    				if(parentType >= 0 && parentType <= 6) {
+					    				xCoordChild-=30;
+					    				xCoordParent+=45;
+					    				
+					    				int offset = parentLineOffsets.get(parentID);
+					    				offset *= 3;
+					    				Line2D line1 = new Line2D.Float(xCoordParent, yCoordParent, xCoordParent+offset, yCoordParent);
+					    				Line2D line2 = new Line2D.Float(xCoordParent+offset, yCoordParent, xCoordParent+offset, yCoordChild);
+					    				Line2D line3 = new Line2D.Float(xCoordParent+offset, yCoordChild, xCoordChild, yCoordChild);
+					    				wires.add(new Wire(line1, line2, line3));
+				    				}
+				    				// parent is Input
+				    				else if(parentType == 7) {
+					    				xCoordChild-=30;
+					    				xCoordParent+=30;
+					    				int offset = parentLineOffsets.get(parentID);
+					    				offset *= 3;
+					    				Line2D line1 = new Line2D.Float(xCoordParent, yCoordParent, xCoordParent+offset, yCoordParent);
+					    				Line2D line2 = new Line2D.Float(xCoordParent+offset, yCoordParent, xCoordParent+offset, yCoordChild);
+					    				Line2D line3 = new Line2D.Float(xCoordParent+offset, yCoordChild, xCoordChild, yCoordChild);
+					    				wires.add(new Wire(line1, line2, line3));
+				    				}	
+				    			}
+	
+				    		} // end for
+				            
+				            
+				            g2.setStroke(new BasicStroke(2));
+				            for(Wire w: wires) {
+				            	g2.draw(w.getLine1());
+				            	g2.draw(w.getLine2());
+				            	g2.draw(w.getLine3());
+				            }
+		
+				    	}// end paint component method
+
+				    }// end class
+				    		
+
 				           
-				            	 
-//				            Rectangle rect;
-//				            for (int i = 0; i < circles.size(); i++) {
-//				                rect = circles.elementAt(i);
-//				                g.setColor(colors[(i % color_n)]);
-//				                g.fillOval(rect.x, rect.y, rect.width, rect.height);
-//				            }
-				            
-				            
-				        }
-				    }
-				    
 				    public void initializeImageContainer() {
 				    	Image img = null;
 				    	for(int i = 0; i < 12; ++i) {
@@ -653,6 +829,8 @@ public class GUI {
 				 *  ScrollDemo2 newContentPane = new ScrollDemo2();
 				 */
 				ScrollDemo2 newContentPane = new ScrollDemo2();
+				
+				
 		        newContentPane.setOpaque(true); //content panes must be opaque
 		        frame.setContentPane(newContentPane);
 		        
@@ -1146,4 +1324,82 @@ public class GUI {
 		frame.setVisible(true);
 			
 	}
+	
+//	public void buildWires(){
+//		
+//		ArrayList<Connection> connections = model.queryAndGetConnections();
+//		for(Connection con: connections) {
+//			String parentID = con.getParentID();
+//			String childID = con.getChildID();
+//			int inputType = con.getInputType();
+//			for(ImageCoordAndInfo imgData: newContentPane.)
+//		}
+//		
+//		(float xo,float yo)=outputgate.getlocation();
+//		(float xin,float yin,int whichinput)=inputgate.getlocation();
+//		public void paint(Graphics g) {
+//	        super.paint(g);  // fixes the immediate problem.
+//	        Graphics2D g2 = (Graphics2D) g;
+//			
+//	        // Input 1 of Gate
+//	        if (whichinput = 1){
+//				yin-=offsety;//alligns the line to the correct place based on gate location
+//				xin-=offsetx;
+//				xo+=offsetx;
+//				Line2D lin = new Line2D.Float(xo, xo+counter, yo, yo);
+//				Line2D lin2 = new Line2D.Float(xo+counter, xo+counter, yo, yin);
+//				Line2D lin3 = new Line2D.Float(xo+counter, xin, yin, yin);
+//				//add lin,lin2,lin3 to linked list.
+//				lins.add(lin);
+//				lins.add(lin2);
+//				lins.add(lin3);
+//				g2.draw(lin);
+//			}
+//			
+//			// Input 2 of Gate
+//			if (whichinput = 2){
+//				yin-=offsety;//alligns the line to the correct place based on gate location
+//				xin-=offsetx;
+//				xo+=offsetx;
+//				Line2D lin = new Line2D.Float(xo, xo+counter, yo, yo);
+//				Line2D lin2 = new Line2D.Float(xo+counter, xo+counter, yo, yin);
+//				Line2D lin3 = new Line2D.Float(xo+counter, xin, yin, yin);
+//				lins.add(lin);
+//				lins.add(lin2);
+//				lins.add(lin3);
+//				g2.draw(lin);
+//			}
+//			
+//			
+//			// Input 3 of Not
+//			if (whichinput = 3){
+//				xin-=offsetx;
+//				xo+=offsetx;
+//				Line2D lin = new Line2D.Float(xo, xo+counter, yo, yo);
+//				Line2D lin2 = new Line2D.Float(xo+counter, xo+counter, yo, yin);
+//				Line2D lin3 = new Line2D.Float(xo+counter, xin, yin, yin);
+//				lins.add(lin);
+//				lins.add(lin2);
+//				lins.add(lin3);
+//				g2.draw(lin);
+//			}
+//			
+//			
+//			// Output element
+//			if (whichinput = 4){
+//				Line2D lin = new Line2D.Float(xo, xo+counter, yo, yo);
+//				Line2D lin2 = new Line2D.Float(xo+counter, xo+counter, yo, yin);
+//				Line2D lin3 = new Line2D.Float(xo+counter, xin, yin, yin);
+//				lins.add(lin);
+//				lins.add(lin2);
+//				lins.add(lin3);
+//				g2.draw(lin);
+//			}
+//	    }
+//
+//
+//
+//	}
+	
+	
 }
