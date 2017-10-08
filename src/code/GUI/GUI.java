@@ -96,6 +96,7 @@ public class GUI {
 	private static final int OUTPUT_BUTTON = 9;
 	private static final int OUTPUT_LOGIC_0 = 10;
 	private static final int OUTPUT_LOGIC_1 = 11;
+	private static final int OUTPUT_LOGIC_X = 12;
 	
 	private int CEBTypetemp = -1;
 	private int circuitElementButtonClicked = INVALID;
@@ -408,7 +409,7 @@ public class GUI {
 				           
 				    public void initializeImageContainer() {
 				    	Image img = null;
-				    	for(int i = 0; i < 12; ++i) {
+				    	for(int i = 0; i < 13; ++i) {
 				    		switch (i) {
 				    			case 0:
 				    				
@@ -510,6 +511,14 @@ public class GUI {
 				    	    		}
 				    				elementImageTypes.add(img);
 				        			break;
+				    			case 12:
+				    				try {
+				    	    			img = ImageIO.read(getClass().getResource("images/output_x_color.png"));
+				    	    		} catch (IOException exp) {
+				    	    			exp.printStackTrace();
+				    	    		}
+				    				elementImageTypes.add(img);
+				        			break;
 				    			
 				    		}
 				    			
@@ -536,13 +545,14 @@ public class GUI {
 				    
 				      //no overlapping gates  
 				        	
-				        	CEBTypetemp = circuitElementButtonClicked;
+				        CEBTypetemp = circuitElementButtonClicked;
 				        
-				        if(optionButtons == MOVE_BUTTON) {
+//				        if(optionButtons == MOVE_BUTTON) {
+//				        	
+//				        }
+				        
+				        if(optionButtons == DELETE_BUTTON) {
 				        	
-				        }
-				        
-				        else if(optionButtons == DELETE_BUTTON) {
 				        	
 				        	System.out.println("I am here 1");
 				        	boolean b = false;
@@ -680,6 +690,11 @@ public class GUI {
 				        			System.out.println("connection made between " + parentID + " and " + childID);
 				        			//model.printAllConnectionsForAllCircuitElements();
 				        		}
+				        		
+				        		if(!connectionSuccessful) {
+				        			JOptionPane.showMessageDialog(frame, "Not a valid connection!");
+				        		}
+				        		
 				        		optionButtons = INVALID;
 				        		
 				        	}
@@ -689,7 +704,7 @@ public class GUI {
 				        	
 				        }
 				     	
-				        else { //General case
+				        else if (circuitElementButtonClicked != INVALID){ //General case
 				        	boolean b = false;
 				        	String id = "";
 				        	for (ImageCoordAndType temp : imageInfo) {
@@ -710,26 +725,30 @@ public class GUI {
 				        		
 				        		if ((((clicklowx<=highx) && (clicklowx>=lowx)) && ((clicklowy<=highy) && (clicklowy>=lowy)))) {
 				        			circuitElementButtonClicked = INVALID;
+				        			JOptionPane.showMessageDialog(frame, "You have tried to place a new circuit element too close to an existing element!");
 				        			id = temp.getID();
 				        			b = true;
 
 				  
 				        		}
-				        		if ((((clicklowx<=highx) && (clicklowx>=lowx)) && ((clickhighy<=highy) && (clickhighy>=lowy)))) {
+				        		else if ((((clicklowx<=highx) && (clicklowx>=lowx)) && ((clickhighy<=highy) && (clickhighy>=lowy)))) {
 				        			circuitElementButtonClicked = INVALID;
+				        			JOptionPane.showMessageDialog(frame, "You have tried to place a new circuit element too close to an existing element!");
 				        			id = temp.getID();
 				        			b = true;
 
 				        		}
-				        		if ((((clickhighx<=highx) && (clickhighx>=lowx)) && ((clicklowy<=highy) && (clicklowy>=lowy)))) {
+				        		else if ((((clickhighx<=highx) && (clickhighx>=lowx)) && ((clicklowy<=highy) && (clicklowy>=lowy)))) {
 				        			circuitElementButtonClicked = INVALID;
+				        			JOptionPane.showMessageDialog(frame, "You have tried to place a new circuit element too close to an existing element!");
 				        			id = temp.getID();
 				        			b = true;
 				        			
 				        			
 				        		}
-				        		if ((((clickhighx<=highx) && (clickhighx>=lowx)) && ((clickhighy<=highy) && (clickhighy>=lowy)))) {
+				        		else if ((((clickhighx<=highx) && (clickhighx>=lowx)) && ((clickhighy<=highy) && (clickhighy>=lowy)))) {
 				        			circuitElementButtonClicked = INVALID;
+				        			JOptionPane.showMessageDialog(frame, "You have tried to place a new circuit element too close to an existing element!");
 				        			id = temp.getID();
 				        			b = true;
 
@@ -828,7 +847,7 @@ public class GUI {
 		JButton button = new JButton();
 		button.setToolTipText("<html><img src=" + getClass().getResource("images/And_Gate_Truth_Table.jpg") + "</html>");
 		try {
-			Image img = ImageIO.read(getClass().getResource("images/and_with_text.png"));
+			Image img = ImageIO.read(getClass().getResource("images/and_with_text_small.png"));
 			button.setIcon(new ImageIcon(img));
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -837,6 +856,7 @@ public class GUI {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				circuitElementButtonClicked = AND_BUTTON;
+				optionButtons = INVALID;
 				System.out.println("I clicked the AND Button " + circuitElementButtonClicked);
 			}
 		});
@@ -845,7 +865,7 @@ public class GUI {
 		button = new JButton();
 		button.setToolTipText("<html><img src=" + getClass().getResource("images/Or_Gate_Truth_Table.jpg") + "</html>");
 		try {
-			Image img = ImageIO.read(getClass().getResource("images/or_with_text.png"));
+			Image img = ImageIO.read(getClass().getResource("images/or_with_text_small.png"));
 			button.setIcon(new ImageIcon(img));
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -854,6 +874,7 @@ public class GUI {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				circuitElementButtonClicked = OR_BUTTON;
+				optionButtons = INVALID;
 				System.out.println("I clicked the OR Button " + circuitElementButtonClicked);
 			}
 		});
@@ -862,7 +883,7 @@ public class GUI {
 		button = new JButton();
 		button.setToolTipText("<html><img src=" + getClass().getResource("images/Not_Gate_Truth_Table.jpg") + "</html>");
 		try {
-			Image img = ImageIO.read(getClass().getResource("images/not_with_text.png"));
+			Image img = ImageIO.read(getClass().getResource("images/not_with_text_small.png"));
 			button.setIcon(new ImageIcon(img));
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -871,6 +892,7 @@ public class GUI {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				circuitElementButtonClicked = NOT_BUTTON;
+				optionButtons = INVALID;
 				System.out.println("I clicked the NOT Button");
 			}
 		});
@@ -879,7 +901,7 @@ public class GUI {
 		button = new JButton();
 		button.setToolTipText("<html><img src=" + getClass().getResource("images/Xor_Gate_Truth_Table.jpg") + "</html>");
 		try {
-			Image img = ImageIO.read(getClass().getResource("images/xor_with_text.png"));
+			Image img = ImageIO.read(getClass().getResource("images/xor_with_text_small.png"));
 			button.setIcon(new ImageIcon(img));
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -888,6 +910,7 @@ public class GUI {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				circuitElementButtonClicked = XOR_BUTTON;
+				optionButtons = INVALID;
 				System.out.println("I clicked the XOR Button");
 			}
 		});
@@ -896,7 +919,7 @@ public class GUI {
 		button = new JButton();
 		button.setToolTipText("<html><img src=" + getClass().getResource("images/Nand_Gate_Truth_Table.jpg") + "</html>");
 		try {
-			Image img = ImageIO.read(getClass().getResource("images/nand_with_text.png"));
+			Image img = ImageIO.read(getClass().getResource("images/nand_with_text_small.png"));
 			button.setIcon(new ImageIcon(img));
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -905,6 +928,7 @@ public class GUI {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				circuitElementButtonClicked = NAND_BUTTON;
+				optionButtons = INVALID;
 				System.out.println("I clicked the NAND Button");
 			}
 		});
@@ -913,7 +937,7 @@ public class GUI {
 		button = new JButton();
 		button.setToolTipText("<html><img src=" + getClass().getResource("images/Nor_Gate_Truth_Table.jpg") + "</html>");
 		try {
-			Image img = ImageIO.read(getClass().getResource("images/nor_with_text.png"));
+			Image img = ImageIO.read(getClass().getResource("images/nor_with_text_small.png"));
 			button.setIcon(new ImageIcon(img));
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -922,6 +946,7 @@ public class GUI {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				circuitElementButtonClicked = NOR_BUTTON;
+				optionButtons = INVALID;
 				System.out.println("I clicked the NOR Button");
 			}
 		});
@@ -930,7 +955,7 @@ public class GUI {
 		button = new JButton();
 		button.setToolTipText("<html><img src=" + getClass().getResource("images/Xnor_Gate_Truth_Table.jpg") + "</html>");
 		try {
-			Image img = ImageIO.read(getClass().getResource("images/xnor_with_text.png"));
+			Image img = ImageIO.read(getClass().getResource("images/xnor_with_text_small.png"));
 			button.setIcon(new ImageIcon(img));
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -939,6 +964,7 @@ public class GUI {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				circuitElementButtonClicked = XNOR_BUTTON;
+				optionButtons = INVALID;
 				System.out.println("I clicked the XNOR Button");
 			}
 		});
@@ -948,15 +974,17 @@ public class GUI {
 		
 		button = new JButton();
 		try {
-			Image img = ImageIO.read(getClass().getResource("images/input.png"));
+			Image img = ImageIO.read(getClass().getResource("images/input_small.png"));
 			button.setIcon(new ImageIcon(img));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		button.setToolTipText("<html> <font size=4>Click this button then cick in the workspace to place an Input circuit element<br> Inputs are the logic values flowing into the circuit(s)</font> </html>");
 		button.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				circuitElementButtonClicked = INPUT_BUTTON;
+				optionButtons = INVALID;
 				System.out.println("I clicked the INPUT Button");
 			}
 		});
@@ -966,48 +994,62 @@ public class GUI {
 	
 		button = new JButton();
 		try {
-			Image img = ImageIO.read(getClass().getResource("images/output.png"));
+			Image img = ImageIO.read(getClass().getResource("images/output_small.png"));
 			button.setIcon(new ImageIcon(img));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		button.setToolTipText("<html> <font size=4> Click this button then click in the workspace to place an Output circuit element<br> Outputs display the logic values flowing out of a circuit<br>If circuit cannot be evaluated, Output will display \'X\'</font> </html>");
 		button.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				circuitElementButtonClicked = OUTPUT_BUTTON;
+				optionButtons = INVALID;
 				System.out.println("I clicked the OUTPUT Button");
 			}
 		});
 		gates_and_io.add(button);
 		
 		//Add hover to tell user what the following buttons do:
-		button = new JButton("MOVE");
-		button.setSize(new Dimension(50, 50));
-		button.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				System.out.println("I clicked the MOVE Button");
-				optionButtons = MOVE_BUTTON;
-			}
-		});
+//		button = new JButton("MOVE");
+//		button.setToolTipText("<html> <font size=4> This button allows you to move an existing circuit element in the workspace<br> 1. "
+//				+ "Click Move <br> 2. Click desired circuit element <br> 3. Click new location for circuit element</font> </html>");
+//		button.setSize(new Dimension(50, 50));
+//		button.addMouseListener(new MouseAdapter() {
+//			@Override
+//			public void mousePressed(MouseEvent e) {
+//				System.out.println("I clicked the MOVE Button");
+//				optionButtons = MOVE_BUTTON;
+//			}
+//		});
 		gates_and_io.add(button);
 		
 		button = new JButton("DELETE");
+		button.setPreferredSize(new Dimension(50, 38));
+		button.setToolTipText("<html> <font size=4> This button allows you to delete an existing circuit element in the workspace<br>All wires associated"
+				+ "with the deleted circuit element will also be deleted<br> 1. "
+				+ "Click Delete <br> 2. Click desired circuit element</font> </html>");
 		button.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				System.out.println("I clicked the DELETE Button");
+				
 				optionButtons = DELETE_BUTTON;
+				circuitElementButtonClicked = INVALID;
 			}
 		});
 		gates_and_io.add(button);
 		
 		button = new JButton("CONNECT");
+		button.setToolTipText("<html> <font size=4> This button allows you to connect two existing circuit elements with a wire in the workspace<br> 1. "
+				+ "Click Connect <br> 2. Click desired parent circuit element <br> 3. Click desired child circuit element.</font> </html>");
 		button.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				System.out.println("I clicked the CONNECT Button");
+				
 				optionButtons = CONNECT_BUTTON;
+				circuitElementButtonClicked = INVALID;
 				
 				//test
 				model.printAllFamilyTrees();
@@ -1019,33 +1061,36 @@ public class GUI {
 		
 		
 		 button = new JButton("TOGGLE INPUT");
+			button.setToolTipText("<html> <font size=4> This button lets you change the input signal for an Input.<br> 1. Click TOGGLE INPUT Button<br>2. Click the Input circuit element whose value you would like to change<br> 3. The Input value has now changed (from 0 to 1 or 1 to 0)</font> </html>");
 	        button.addMouseListener(new MouseAdapter() {
 	            @Override
 	            public void mousePressed(MouseEvent e) {
 	                System.out.println("I clicked the TOGGLE Button");
 	                optionButtons = TOGGLE_INPUT_BUTTON;
+	                circuitElementButtonClicked = INVALID;
 	            }
 	        });
 	    gates_and_io.add(button);
 		
 		button = new JButton("CANCEL");
+		button.setToolTipText("<html> <font size=4> This button allows you to cancel any operation.</font> </html>");
 		button.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				System.out.println("I clicked the CANCEL Button");
-				if(optionButtons == MOVE_BUTTON) {System.out.println("You set moveButtonClicked to: " + (optionButtons = INVALID));}
-				if(optionButtons == DELETE_BUTTON) {System.out.println("You set deleteButtonClicked to: " + (optionButtons = DELETE_BUTTON));}
-				if(optionButtons == CONNECT_BUTTON) {System.out.println("You set connectButtonClicked to: " + (optionButtons = CONNECT_BUTTON));}
-				if(circuitElementButtonClicked != INVALID) {System.out.println("You set circuitElementButtonClicked to: " + (circuitElementButtonClicked = INVALID));}
+				circuitElementButtonClicked = INVALID;
+				optionButtons = INVALID;
 			}
 		});
 		gates_and_io.add(button);
 		
 		button = new JButton("EVALUATE");
+		button.setToolTipText("<html> <font size=4> This button will evaluate the circuit(s) and display output values.<br>ALL circuit elements must be fully connected <br> There can be no \"dangling\" wires</font> </html>");
 		button.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				System.out.println("I clicked the EVALUATE Button");
+				circuitElementButtonClicked = INVALID;
 				boolean canWeEvaluate = model.evaluateCircuitNetwork();
 				
 				if(canWeEvaluate) {
@@ -1079,9 +1124,23 @@ public class GUI {
 					errorDialog.setHorizontalTextPosition(SwingConstants.CENTER);
 					errorDialog.setVerticalTextPosition(SwingConstants.NORTH);
 					errorDialog.setVerticalAlignment(SwingConstants.NORTH);
-					errorDialog.setText("The circuit has missing connections and cannot be evaluated! Please complete the circuit.");
+					errorDialog.setText("The circuit has missing connections and cannot be evaluated! Please complete the circuit.<br>All output values will now be set to X");
 					JOptionPane.showMessageDialog(null,errorDialog, "Error!", 0, null);
+					
+					//elementImageTypes
+					
+					for(int i = 0; i < newContentPane.getImageInfo().size(); ++i) {
+						if(newContentPane.getImageInfo().get(i).getElementType() == OUTPUT_BUTTON) {
+							newContentPane.getCircuitElementImages().remove(i);
+							newContentPane.getCircuitElementImages().add(i, newContentPane.getElementImageTypes().get(12));
+							newContentPane.getDrawingPane().revalidate();
+							newContentPane.getDrawingPane().repaint();
+						}
+					}
+					
 				}
+				
+				optionButtons = INVALID;
 		
 			}
 
